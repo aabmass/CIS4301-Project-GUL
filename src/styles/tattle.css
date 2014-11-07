@@ -318,11 +318,11 @@ button.child-search {
     zoom: 1;
 }
 footer {
-    background-color: #74c994;
+    background-color: #179831;
     padding: 12px;
     font-family: "museo-sans",  sans-serif;
     font-size: 0.9em;
-    color: #54686c;
+    color: #fcfbe4;
 }
 @media all and (max-width: 840px) {
     #myinput {
