@@ -1,7 +1,8 @@
 var putInCountries = function() {
     //this function is in data.js
-    forEachCountry(function(country) {
-        $("#companies ul").append("<li>" + country.NAME + "</li>");
+    forEachAddress(function(addr) {
+        $("#companies ul").append("<li>Coordinates: " + addr.COORD_LAT + 
+                                  " " + addr.COORD_LON + "</li>");
     });
 }
 

@@ -3,7 +3,7 @@ import cx_Oracle as oracle
 
 def runSQLAsDict(sqlString):
     """ Returns a dictionary for the given sqlString query """
-    con = oracle.connect("aaron/itsmeaa1@orcl")
+    con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
     cur = con.cursor()
     cur.execute(sqlString)
 
