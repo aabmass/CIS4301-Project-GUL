@@ -15,15 +15,13 @@ def runSQLAsDict(sqlString):
     con.close()
     return result
 
-class Country:
-    def __init__(self):
-        self.name = ""
-        self.capital = ""
-        self.province = ""
-
-
+class Address:
+    def __init__(self, id, capital, province):
+        self.id = id 
+        self.capital = capital
+        self.province = province
 
     # Static functions for Country
     @staticmethod
     def findAll():
-        return runSQLAsDict("SELECT * FROM COUNTRY")
+        return runSQLAsDict("SELECT * FROM ADDRESS")
