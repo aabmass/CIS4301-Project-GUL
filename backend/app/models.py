@@ -3,7 +3,7 @@ import cx_Oracle as oracle
 
 def runSQLAsDict(sqlString):
     """ Returns a dictionary for the given sqlString query """
-    con = oracle.connect("aaron/itsmeaa1@orcl")
+    con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
     cur = con.cursor()
     cur.execute(sqlString)
 
@@ -15,15 +15,13 @@ def runSQLAsDict(sqlString):
     con.close()
     return result
 
-class Country:
-    def __init__(self):
-        self.name = ""
-        self.capital = ""
-        self.province = ""
-
-
+class Address:
+    def __init__(self, id, capital, province):
+        self.id = id 
+        self.capital = capital
+        self.province = province
 
     # Static functions for Country
     @staticmethod
     def findAll():
-        return runSQLAsDict("SELECT * FROM COUNTRY")
+        return runSQLAsDict("SELECT * FROM ADDRESS")
