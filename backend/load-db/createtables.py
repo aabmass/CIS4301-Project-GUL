@@ -4,7 +4,8 @@ from dbutil import *
 
 def createTables():
     """ Populate the array with names of sql DDL files """
-    for sqlFileName in ["ADDRESS.sql"]:
+    for sqlFileName in ["Address.sql", "Electricity.sql", "CodeViolationsReport.sql",
+                        "FireRescueEMSResponse.sql"]:
         try:
             runSqlFile("create/" + sqlFileName)  
             print "Created table '{}'".format(sqlFileName.split(".sql")[0])
