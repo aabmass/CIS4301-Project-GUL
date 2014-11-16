@@ -15,3 +15,7 @@ A Nice Workflow
     delete the branch, too
 
 [Workflow](https://guides.github.com/introduction/flow/index.html)
+
+* The data: 
+* Energy consumption by service address - https://data.cityofgainesville.org/Environment-Energy/Electric-Consumption-By-Service-Address/jp78-igic
+* Energy consumption by month - https://data.cityofgainesville.org/Environment-Energy/Electric-Consumption-By-Month/7dsc-hrh4
