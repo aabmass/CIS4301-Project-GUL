@@ -46,7 +46,7 @@ class JSONData:
     def getRows(self):
         return self.rows
 
-class DatabaseTable:
+class DatabaseTable(object):
     def __init__(self, data):
         # The data as a dictionary
         self.data = data
@@ -85,10 +85,9 @@ class Gas(DatabaseTable):
         # dbutil.close()
 
 # Lets build addresses from Gas data
-class Address:
+class Address(DatabaseTable):
     def __init__(self, data):
-        # The data as a dictionary
-        self.data = data
+        DatabaseTable.__init__(self, data)
 
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
@@ -110,7 +109,7 @@ class Address:
         cur.executemany(queryString, tmpRows)
         dbutil.close()
 
-add = Address.createFromFile('/home/aaron/Downloads/naturalgas.json')
+add = Address.createFromFile('/tmp/naturalgas.json')
 print "Going to insert into database..."
 add.insertIntoDatabase()
 
