@@ -1,11 +1,14 @@
+from app import address
 from app import app
-from app import models
-from flask import json as json
+from flask import json
 
-""" Sets up the routes, really """
+# Sets up the routes, really
 
-@app.route('/address')
-def address():
-     all = models.Address.findAll()
-     print all
-     return json.jsonify({"addresses": all})
+@app.route('/address.json')
+def someAddresses():
+    all = []
+    all.append(address.findOneByID(22))
+    all.append(address.findOneByID(24))
+    all.append(address.findOneByID(26))
+    all.append(address.findOneByID(10021))
+    return json.jsonify({"addresses": all})
