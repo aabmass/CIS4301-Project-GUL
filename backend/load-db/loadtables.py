@@ -46,8 +46,7 @@ class JSONData:
     def getRows(self):
         return self.rows
 
-
-class Gas:
+class DatabaseTable:
     def __init__(self, data):
         # The data as a dictionary
         self.data = data
@@ -58,12 +57,32 @@ class Gas:
         return cls(JSONData(filename))
 
     def insertIntoDatabase(self):
+        raise NotImplementedError("You must override \'insertIntoDatabase\'")
+
+class Gas(DatabaseTable):
+    def __init__(self, data):
+        DatabaseTable.__init__(self, data)
+
+    def insertIntoDatabase(self):
         cur = dbutil.getCursor()
         queryString = """
         INSERT INTO ElectricityReport (ID, address_ID, month, year, consumption)
         VALUES(:1, :2, :3, :4, :5)
         """
-        cur.executemany(queryString, self.data.getRows())
+        ## Further implement here....
+        # tmpRows = []
+        # index = 1
+        # for row in self.data.getRows():
+        #     entryTuple = (index, row['ServiceAddress'], row['ServCity'],
+        #                   row['Location 1'][1], row['Location 1'][2])
+        #     tmpRows.append(entryTuple)
+        #     index = index + 1
+
+        # # put them in the database
+        # print "One of the tuples is " + str(tmpRows[0])
+        # print "Going to insert {} tuples now".format(len(tmpRows))
+        # cur.executemany(queryString, tmpRows)
+        # dbutil.close()
 
 # Lets build addresses from Gas data
 class Address:
@@ -71,17 +90,12 @@ class Address:
         # The data as a dictionary
         self.data = data
 
-    @classmethod
-    def createFromFile(cls, filename):
-        return cls(JSONData(filename))
-
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
         queryString = """
         INSERT INTO ADDRESS (ID, streetAddress, city, coord_Lat, coord_Lon)
         VALUES(:1, :2, :3, :4, :5)
         """
-        # So much data copying... :(
         tmpRows = []
         index = 1
         for row in self.data.getRows():
