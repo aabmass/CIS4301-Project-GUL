@@ -1,6 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import json
+import sys
 import cx_Oracle as oracle
 
 con = None
@@ -9,8 +10,14 @@ cur = None
 def getCursor():
     global con
     global cur
+
     if con is None:
-        con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
+        if (len(sys.argv) == 2):
+            # SSH port forwarding is done, use localhost
+            con = oracle.connect("aaron/itsmeaa1@localhost/orcl")
+        else:
+            # We are running on UF domain, connect to oracle.ci...
+            con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
     if cur is None:
         cur = con.cursor()
 

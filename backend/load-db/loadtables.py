@@ -48,21 +48,57 @@ class JSONData:
 
 
 class Gas:
-    def __init__(self):
+    def __init__(self, data):
         # The data as a dictionary
-        self.data = JSONData('/home/aaron/Downloads/naturalgas.json')
+        self.data = data
         print self.data.getRows()[0]
+
+    @classmethod
+    def createFromFile(cls, filename):
+        return cls(JSONData(filename))
 
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
         queryString = """
-        INSERT INTO ElectricityReport VALUES(
-            :ID, :address_ID, :month, :year, :consumption
-        )
+        INSERT INTO ElectricityReport (ID, address_ID, month, year, consumption)
+        VALUES(:1, :2, :3, :4, :5)
         """
-        #cur.execute(queryString, ID=
+        cur.executemany(queryString, self.data.getRows())
 
-gas = Gas()
+# Lets build addresses from Gas data
+class Address:
+    def __init__(self, data):
+        # The data as a dictionary
+        self.data = data
+
+    @classmethod
+    def createFromFile(cls, filename):
+        return cls(JSONData(filename))
+
+    def insertIntoDatabase(self):
+        cur = dbutil.getCursor()
+        queryString = """
+        INSERT INTO ADDRESS (ID, streetAddress, city, coord_Lat, coord_Lon)
+        VALUES(:1, :2, :3, :4, :5)
+        """
+        # So much data copying... :(
+        tmpRows = []
+        index = 1
+        for row in self.data.getRows():
+            entryTuple = (index, row['ServiceAddress'], row['ServCity'],
+                          row['Location 1'][1], row['Location 1'][2])
+            tmpRows.append(entryTuple)
+            index = index + 1
+
+        # put them in the database
+        print "One of the tuples is " + str(tmpRows[0])
+        print "Going to insert {} tuples now".format(len(tmpRows))
+        cur.executemany(queryString, tmpRows)
+        dbutil.close()
+
+add = Address.createFromFile('/home/aaron/Downloads/naturalgas.json')
+print "Going to insert into database..."
+add.insertIntoDatabase()
 
 
 # print pprint(getColumns('/home/aaron/Downloads/electricity.json'))
