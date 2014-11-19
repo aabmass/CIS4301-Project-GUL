@@ -82,7 +82,7 @@ class Gas(DatabaseTable):
         # print "One of the tuples is " + str(tmpRows[0])
         # print "Going to insert {} tuples now".format(len(tmpRows))
         # cur.executemany(queryString, tmpRows)
-        # dbutil.close()
+        # cur.close()
 
 # Lets build addresses from Gas data
 class Address(DatabaseTable):
@@ -107,7 +107,7 @@ class Address(DatabaseTable):
         print "One of the tuples is " + str(tmpRows[0])
         print "Going to insert {} tuples now".format(len(tmpRows))
         cur.executemany(queryString, tmpRows)
-        dbutil.close()
+        cur.close()
 
 add = Address.createFromFile('/tmp/naturalgas.json')
 print "Going to insert into database..."

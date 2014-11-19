@@ -1,32 +1,31 @@
 #!/usr/bin/env python2
 
-import json
 import sys
 import cx_Oracle as oracle
 
-con = None
-cur = None
+# Holds the connection in its namespace
+class DBUtil(object):
+    con = None
 
 def getCursor():
-    global con
-    global cur
-
-    if con is None:
-        if (len(sys.argv) == 2):
+    if DBUtil.con is None:
+        if ('--local' in sys.argv):
             # SSH port forwarding is done, use localhost
-            con = oracle.connect("aaron/itsmeaa1@localhost/orcl")
+            DBUtil.con = oracle.connect("aaron/itsmeaa1@localhost/orcl")
         else:
             # We are running on UF domain, connect to oracle.ci...
-            con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
-    if cur is None:
-        cur = con.cursor()
-
-    return cur
+            DBUtil.con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
+    return DBUtil.con.cursor()
 
 def close():
-    cur.close()
-    con.commit()
-    con.close()
+    print "Going to close database"
+    DBUtil.con.close()
+    DBUtil.con = None
+
+def closeAndCommit():
+    print "Commiting to database"
+    DBUtil.con.commit()
+    close()
 
 def runSqlFile(filename):
     cur = getCursor()
@@ -34,15 +33,17 @@ def runSqlFile(filename):
     with open(filename, 'r') as sqlFile:
         asString = sqlFile.read()
         cur.execute(asString)
+    cur.close()
 
 def runSQLAsDict(sqlString):
-    """ Returns a dictionary for the given sqlString query """
+    # Returns a dictionary for the given sqlString query
     cur = getCursor()
     cur.execute(sqlString)
 
     # Encode it as a python dictionary
     desc = [d[0] for d in cur.description]
-    result = [dict(zip(desc,line)) for line in cur]
+    result = [dict(zip(desc, line)) for line in cur]
 
-    con.close()
+    cur.close()
+    # Don't call close() unless we don't want persistent connection
     return result
