@@ -98,16 +98,17 @@ class Address(DatabaseTable):
         tmpRows = []
         index = 1
         for row in self.data.getRows():
-            entryTuple = (index, row['ServiceAddress'], row['ServCity'],
-                          row['Location 1'][1], row['Location 1'][2])
-            tmpRows.append(entryTuple)
-            index = index + 1
+            if (row['Month'] == 'January' and row['Year'] == '2013'):
+                entryTuple = (index, row['ServiceAddress'], row['ServCity'],
+                              row['Location 1'][1], row['Location 1'][2])
+                tmpRows.append(entryTuple)
+                index = index + 1
 
         # put them in the database
         print "One of the tuples is " + str(tmpRows[0])
         print "Going to insert {} tuples now".format(len(tmpRows))
         cur.executemany(queryString, tmpRows)
-        cur.close()
+        dbutil.closeAndCommit()
 
 add = Address.createFromFile('/tmp/naturalgas.json')
 print "Going to insert into database..."
