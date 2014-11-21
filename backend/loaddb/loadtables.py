@@ -90,6 +90,20 @@ class Gas(DatabaseTable):
 class Address(DatabaseTable):
     def __init__(self, data):
         DatabaseTable.__init__(self, data)
+        self.makeAddressTuples()
+
+    def makeAddressTuples(self):
+        self.tuples = []
+        index = 1
+        for row in self.data.getRows():
+            if (row['Month'] == 'January' and row['Year'] == '2013'):
+                entryTuple = (index, row['ServiceAddress'], row['ServCity'],
+                              row['Location 1'][1], row['Location 1'][2])
+                self.tuples.append(entryTuple)
+                index = index + 1
+
+    def getTuples(self):
+        return self.tuples
 
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
@@ -97,19 +111,11 @@ class Address(DatabaseTable):
         INSERT INTO ADDRESS (ID, streetAddress, city, coord_Lat, coord_Lon)
         VALUES(:1, :2, :3, :4, :5)
         """
-        tmpRows = []
-        index = 1
-        for row in self.data.getRows():
-            if (row['Month'] == 'January' and row['Year'] == '2013'):
-                entryTuple = (index, row['ServiceAddress'], row['ServCity'],
-                              row['Location 1'][1], row['Location 1'][2])
-                tmpRows.append(entryTuple)
-                index = index + 1
 
         # put them in the database
-        print "One of the tuples is " + str(tmpRows[0])
-        print "Going to insert {} tuples now".format(len(tmpRows))
-        cur.executemany(queryString, tmpRows)
+        print "One of the tuples is " + str(self.getTuples()[0])
+        print "Going to insert {} tuples now".format(len(self.getTuples()))
+        cur.executemany(queryString, self.getTuples())
         dbutil.closeAndCommit()
 
 parser = argparse.ArgumentParser(description='Get filenames')
@@ -118,7 +124,8 @@ parser.add_argument('-l', '--local', action='store_true',
 parser.add_argument('--gas', help='Path to the gas usage json file')
 args = parser.parse_args()
 
-add = Address.createFromFile(args.gas)
+gasData = JSONData(args.gas)
+add = Address(gasData)
 print "Going to insert into database..."
 add.insertIntoDatabase()
 
