@@ -62,8 +62,10 @@ class DatabaseTable(object):
         raise NotImplementedError("You must override \'insertIntoDatabase\'")
 
 class Gas(DatabaseTable):
-    def __init__(self, data):
+    def __init__(self, data, addressTuples):
         DatabaseTable.__init__(self, data)
+        self.addressTuples = addressTuples
+        self.makeGasTuples()
 
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
@@ -71,28 +73,28 @@ class Gas(DatabaseTable):
         INSERT INTO ElectricityReport (ID, address_ID, month, year, consumption)
         VALUES(:1, :2, :3, :4, :5)
         """
-        ## Further implement here....
-        # tmpRows = []
-        # index = 1
-        # for row in self.data.getRows():
-        #     entryTuple = (index, row['ServiceAddress'], row['ServCity'],
-        #                   row['Location 1'][1], row['Location 1'][2])
-        #     tmpRows.append(entryTuple)
-        #     index = index + 1
 
-        # # put them in the database
-        # print "One of the tuples is " + str(tmpRows[0])
-        # print "Going to insert {} tuples now".format(len(tmpRows))
+        # index = 1
+        # for address in 
+        # for row in self.data.getRows():
+        #     if (row['Month'] == 'January' and
+        #         row['Year'] == '2013' and
+        #         ):
+        #         entryTuple = (index, row['ServiceAddress'], row['ServCity'],
+        #                       row['Location 1'][1], row['Location 1'][2])
+        #         self.tuples.append(entryTuple)
+        #         index = index + 1
+
         # cur.executemany(queryString, tmpRows)
-        # cur.close()
+        # dbutil.closeAndCommit()
 
 # Lets build addresses from Gas data
 class Address(DatabaseTable):
     def __init__(self, data):
         DatabaseTable.__init__(self, data)
-        self.makeAddressTuples()
+        self.makeTuples()
 
-    def makeAddressTuples(self):
+    def makeTuples(self):
         self.tuples = []
         index = 1
         for row in self.data.getRows():
@@ -102,9 +104,6 @@ class Address(DatabaseTable):
                 self.tuples.append(entryTuple)
                 index = index + 1
 
-    def getTuples(self):
-        return self.tuples
-
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
         queryString = """
@@ -113,10 +112,51 @@ class Address(DatabaseTable):
         """
 
         # put them in the database
-        print "One of the tuples is " + str(self.getTuples()[0])
-        print "Going to insert {} tuples now".format(len(self.getTuples()))
-        cur.executemany(queryString, self.getTuples())
+        print "One of the tuples is " + str(self.tuples[0])
+        print "Going to insert {} tuples now".format(len(self.tuples))
+        cur.executemany(queryString, self.tuples)
         dbutil.closeAndCommit()
+
+class AddressAndGas(Address):
+    def __init__(self, data):
+        AddressAndGas.__init__(self, data)
+
+    def makeTuples(self):
+        self.addressTuples = []
+        self.gasTuples = []
+        # Address and Gas will have the same indices
+        index = 1
+        for row in self.data.getRows():
+            if (row['Month'] == 'January' and row['Year'] == '2013'):
+                addressTuple = (index, row['ServiceAddress'], row['ServCity'],
+                               row['Location 1'][1], row['Location 1'][2])
+
+                gasTuple = (index, index, row['Month'],
+                           row['Year'], row['Therm Consumption'][2])
+                self.addressTuples.append(addressTuple)
+                self.gasTuples.append(gasTuple)
+                index = index + 1
+
+    def insertIntoDatabase(self):
+        cur = dbutil.getCursor()
+        addressQueryString = """
+        INSERT INTO ADDRESS (ID, streetAddress, city, coord_Lat, coord_Lon)
+        VALUES(:1, :2, :3, :4, :5)
+        """
+
+        gasQueryString = """
+        INSERT INTO ElectricityReport (ID, address_ID, month, year, consumption)
+        VALUES(:1, :2, :3, :4, :5)
+        """
+
+        # put them in the database
+        for (queryString, tuples) in [(addressQueryString, self.addressTuples),
+                                      (gasQueryString, self.gasTuples)]:
+            print "One of the tuples is " + str(self.getTuples()[0])
+            print "Going to insert {} tuples now".format(len(self.getTuples()))
+            cur.executemany(queryString, self.getTuples())
+        dbutil.closeAndCommit()
+
 
 parser = argparse.ArgumentParser(description='Get filenames')
 parser.add_argument('-l', '--local', action='store_true',
@@ -125,9 +165,9 @@ parser.add_argument('--gas', help='Path to the gas usage json file')
 args = parser.parse_args()
 
 gasData = JSONData(args.gas)
-add = Address(gasData)
-print "Going to insert into database..."
-add.insertIntoDatabase()
+addAndGas = Address(gasData)
+print "Going to insert Addresses and Gas datas into database..."
+addAndGas.insertIntoDatabase()
 
 
 # print pprint(getColumns('/home/aaron/Downloads/electricity.json'))
