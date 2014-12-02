@@ -1,0 +1,9 @@
+.green {background-color:#179831;}
+.tan {background-color:#fcfbe4;}
+.red_fade {background-color:#FFECEC;}
+#map-canvas {
+  margin-top:50px;
+  height:400px;
+  width:100%;
+  border: 4px solid black;
+}
