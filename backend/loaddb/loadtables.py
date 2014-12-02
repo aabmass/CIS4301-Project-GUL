@@ -131,7 +131,9 @@ class AddressAndGas(DatabaseTable):
             # Skip rows with no usage
             if (row['Therm Consumption'] is None):
                 continue
-            if (row['Month'] == 'January' and row['Year'] == '2013'):
+            else if (index > 10000): # only add 10000 tuples
+                break;
+            else if (row['Month'] == 'January' and row['Year'] == '2013'):
                 addressTuple = (index, row['ServiceAddress'], row['ServCity'],
                                row['Location 1'][1], row['Location 1'][2])
 
