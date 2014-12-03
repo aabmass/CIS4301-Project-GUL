@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html ng-app="CC">
+<head>
+
+  <title>GUL | Neighborhood</title>
+  <link href="src/styles/tattle.css" media="all" rel="stylesheet" />
+  <link href="src/styles/house.css" media="all" rel="stylesheet" />
+
+  <!--<script src="/assets/application-688f63bdd06aee20bf4ea764cef28045.js"></script>
+  <script src="/assets/main-da3bce2f296302bb41fc7f9e08dedcd6.js"></script>
+-->
+
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
+
+<link rel="stylesheet" href="http://use.typekit.net/c/e9b594/1w;chaparral-pro,2,XXw:P:i4,XXn:P:i7,XY8:P:n4,XXk:P:n7;museo-sans,2,Py9:P:i1,Py8:P:n1,PyF:P:n7/d?3bb2a6e53c9684ffdc9a9bf71f5b2a623df248a4a1ae63c32599068f236732e457626403c37dd58f575abe240e77fac9f6a80700cc03279b780ec8dfe933e4b3d3691e96c9c1bfa49083cc6d9c0b5c36780bd1d928bf01fe76adfe29adef7edfacabdc76bfe77bb6dac407c757a45e0c85c050">
+
+<script type="text/javascript" src="src/scripts/jquery.js"></script>
+<script type="text/javascript" src="src/scripts/chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
+<script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
+
+
+<!-- GOOGLE MAPS -->
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_7TfRRWFPYaAM0z5R4G2jhD5O10J90AE"></script>
+<script type="text/javascript">
+function initialize() {
+  var cityCircle;
+
+  var mapOptions = {
+    center: { lat: 29.6862705, lng: -82.319746},
+    zoom: 12
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+  mapOptions);
+
+  var populationOptions = {
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35,
+    map: map,
+    center: mapOptions.center,
+    radius: 5000
+  };
+  // Add the circle for this city to the map.
+  cityCircle = new google.maps.Circle(populationOptions);
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<!--<script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
+
+<!-- <link type="" rel="" href="http://s3.amazonaws.com/bucketname/tattle" />
+
+
+<meta content="authenticity_token" name="csrf-param" />
+<meta content="cp2dU28VPmVb+w0Q8xcgcGXLqlK6dlslKgKFoWOWCTE=" name="csrf-token" /> -->
+<script>
+  function scroll() {
+    window.scrollTo(1000,0);
+  }
+</script>
+</head>
+<body onload="scroll()">
+
+  <div id="landing" style="height:80%;">
+
+    <div id="landing-content" class="clearfix">
+      <div id="header">
+        <h1 id="title"><span id="kern">g</span>ainesville utilities</h1>
+        <img id="logo" alt="Tattle: who owns what" class="animated" src="src/img/icon-plug.png">
+        <h2 id="tagline">how much do YOU use?</h2>
+      </div>
+      <form id="myform">
+        <input type="text" id="myinput" placeholder="my address"/>
+        <input type="submit" value="search" id="mybutton">
+      </form>
+    </div>
+
+  </div>
+
+  <div ng-view>
+    <div class='clearfix house'>
+      <div class='results_content'>
+
+        <div class='column_left'>
+          <img alt='suitcase' src='src/img/neighborhood.png' class='icon'>
+        </div>
+
+        <div class='column_main'>
+          <p class='category c-subhead remove_margin'>your search</p>
+          <p class='category ng_binding'>
+            <span style="font-size:24px">within <strong>1</strong>
+              mile of </span><br>
+            3705 SW 20th St
+          </p>
+          <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
+          <p class='content-collapsed ng-binding'>
+            We have information for <strong>5</strong> months in this neighborhood's
+            history. This area uses approximately 200 KW of energy, and
+            1,000 gallons of water, each month.
+          </p>
+          <div id="map-canvas"></div>
+        </div>
+      </div> <!-- column_main -->
+    </div> <!-- clearfix house -->
+
+    <div class='clearfix house red_fade'>
+      <div class='results_content'>
+        <div class='column_left'>
+          <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/water-.png' class='icon'>
+        </div>
+
+        <div class='column_main  margin-bottom'>
+          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+          <p class='category ng_binding'>Water</p>
+          <div style="width: 100%">
+            <canvas id="water_canvas" height="450" width="600"></canvas>
+          </div>
+        </div>
+
+        <div class='column_left'>
+          <img alt='suitcase' src='http://png-1.findicons.com/files/icons/2480/simplegreen_sustainable_business_icons_set/128/plug_electricity.png' class='icon'>
+        </div>
+        <div class='column_main  margin-bottom'>
+          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+          <p class='category ng_binding'>Electricity</p>
+          <div style="width: 100%">
+            <canvas id="elec_canvas" height="450" width="600"></canvas>
+          </div>
+        </div>
+
+        <div class='column_left'>
+          <img alt='suitcase' src='http://png-3.findicons.com/files/icons/2770/ios_7_icons/512/gas2.png' class='icon'>
+        </div>
+        <div class='column_main  margin-bottom'>
+          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+          <p class='category ng_binding'>Natural Gas</p>
+          <div style="width: 100%">
+            <canvas id="natgas_canvas" height="450" width="600"></canvas>
+          </div>
+        </div> <!-- column_main -->
+      </div> <!-- results content -->
+    </div> <!-- clearix house -->
+
+  </div>
+
+  <footer class="">developed by: Aaron Abbot, Clarence Hwang, Joseph McConnell, and Danny Sepler</a></footer>
+
+  <script>
+    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    var barChartData = {
+      labels : ["January","February","March","April","May","June","July"],
+      datasets : [{
+        fillColor : "rgba(220,220,220,0.5)",
+        strokeColor : "rgba(220,220,220,0.8)",
+        highlightFill: "rgba(220,220,220,0.75)",
+        highlightStroke: "rgba(220,220,220,1)",
+        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+      }]
+    }
+    window.onload = function(){
+      var ctx_water = document.getElementById("water_canvas").getContext("2d");
+      window.myBar = new Chart(ctx_water).Bar(barChartData, {
+        responsive : true
+      });
+
+      var ctx_elec = document.getElementById("elec_canvas").getContext("2d");
+      window.myBar = new Chart(ctx_elec).Bar(barChartData, {
+        responsive : true
+      });
+
+      var ctx_natgas = document.getElementById("natgas_canvas").getContext("2d");
+      window.myBar = new Chart(ctx_natgas).Bar(barChartData, {
+        responsive : true
+      });
+    }
+  </script>
+</body>
+</html>
