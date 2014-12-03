@@ -18,7 +18,7 @@
     <script type="text/javascript" src="src/scripts/jquery.js"></script>
     <script type="text/javascript" src="src/scripts/chart.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
+    <script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 
@@ -72,7 +72,7 @@
     </div>
 
      <div ng-view>
-      <div id='' class='clearfix house'>
+      <div class='clearfix house'>
         <div class='results_content'>
 
           <div class='column_left'>
@@ -96,47 +96,67 @@
               usage originates from fuel.
             </p>
           </div>
+        </div> <!-- column_main -->
+      </div> <!-- clearfix house -->
+
+      <div class='clearfix house red_fade'>
+        <div class='results_content'>
+          <div class='column_left'>
+            <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/water-.png' class='icon'>
+          </div>
+
+          <div class='column_main  margin-bottom'>
+            <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+            <p class='category ng_binding'>Water</p>
+            <div style="width: 100%">
+              <canvas id="water_canvas" height="450" width="600"></canvas>
+            </div>
+          </div>
+
+          <div class='column_left'>
+            <img alt='suitcase' src='http://png-1.findicons.com/files/icons/2480/simplegreen_sustainable_business_icons_set/128/plug_electricity.png' class='icon'>
+          </div>
+          <div class='column_main  margin-bottom'>
+            <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+            <p class='category ng_binding'>Electricity</p>
+            <div style="width: 100%">
+              <canvas id="elec_canvas" height="450" width="600"></canvas>
+            </div>
+          </div>
+
+          <div class='column_left'>
+            <img alt='suitcase' src='http://png-3.findicons.com/files/icons/2770/ios_7_icons/512/gas2.png' class='icon'>
+          </div>
+          <div class='column_main  margin-bottom'>
+            <p class='category c-subhead remove_margin'>your usage -- broken down</p>
+            <p class='category ng_binding'>Natural Gas</p>
+            <div style="width: 100%">
+              <canvas id="natgas_canvas" height="450" width="600"></canvas>
+            </div>
+          </div> <!-- column_main -->
+        </div> <!-- results content -->
+      </div> <!-- clearix house -->
+
+      <div id='' class='clearfix house'>
+        <div class='results_content'>
+
+          <div class='column_left'>
+            <img alt='suitcase' src='src/img/neighborhood.png' class='icon'>
+          </div>
+
+          <div class='column_main'>
+            <p class='category c-subhead remove_margin'>Take a look at the</p>
+            <p class='category ng_binding'>neighborhood</p>
+            <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
+            <p class='content-collapsed ng-binding'>
+              There are <strong>138</strong> houses in a 3-mile radius. See
+              their power usages <a href="#">here</a>
+            </p>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-
-    <div id='' class='clearfix house red_fade'>
-      <div class='results_content'>
-        <div class='column_left'>
-          <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/water-.png' class='icon'>
-        </div>
-
-        <div class='column_main'>
-          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
-          <p class='category ng_binding'>Water</p>
-          <div style="width: 100%">
-            <canvas id="water_canvas" height="450" width="600"></canvas>
-          </div>
-        </div>
-
-        <div class='column_left'>
-          <img alt='suitcase' src='http://png-1.findicons.com/files/icons/2480/simplegreen_sustainable_business_icons_set/128/plug_electricity.png' class='icon'>
-        </div>
-        <div class='column_main'>
-          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
-          <p class='category ng_binding'>Electricity</p>
-          <div style="width: 100%">
-            <canvas id="elec_canvas" height="450" width="600"></canvas>
-          </div>
-        </div>
-
-        <div class='column_left'>
-          <img alt='suitcase' src='http://png-3.findicons.com/files/icons/2770/ios_7_icons/512/gas2.png' class='icon'>
-        </div>
-        <div class='column_main'>
-          <p class='category c-subhead remove_margin'>your usage -- broken down</p>
-          <p class='category ng_binding'>Natural Gas</p>
-          <div style="width: 100%">
-            <canvas id="natgas_canvas" height="450" width="600"></canvas>
-          </div>
-        </div>
-
-      </div>
     </div>
 
     <footer class="">developed by: Aaron Abbot, Clarence Hwang, Joseph McConnell, and Danny Sepler</a></footer>
