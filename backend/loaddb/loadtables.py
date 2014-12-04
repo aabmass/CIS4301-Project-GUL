@@ -131,9 +131,7 @@ class AddressAndGas(DatabaseTable):
             # Skip rows with no usage
             if (row['Therm Consumption'] is None):
                 continue
-            else if (index > 10000): # only add 10000 tuples
-                break;
-            else if (row['Month'] == 'January' and row['Year'] == '2013'):
+            elif (row['Month'] == 'January' and row['Year'] == '2013'):
                 addressTuple = (index, row['ServiceAddress'], row['ServCity'],
                                row['Location 1'][1], row['Location 1'][2])
 
@@ -164,11 +162,54 @@ class AddressAndGas(DatabaseTable):
         dbutil.closeAndCommit()
 
 
+class Electricity(DatabaseTable):
+    def __init__(self, data, addressTuples):
+        DatabaseTable.__init__(self, data)
+        self.addressTuples = addressTuples
+        self.makeTuples()
+
+    def makeTuples(self):
+        self.electricityTuple = []
+
+        index = 1
+        for row in self.data.getRows():
+            # Skip rows with no usage
+            if (row['KWH Consumption'] is None):
+                continue
+            elif (row['Month'] == 'January' and row['Year'] == '2013'):
+                addressTuple = (index, row['ServiceAddress'], row['ServCity'],
+                               row['Location 1'][1], row['Location 1'][2])
+
+                gasTuple = (index, index, row['Month'],
+                           row['Year'], row['KWH Consumption'])
+                self.addressTuples.append(addressTuple)
+                self.gasTuples.append(gasTuple)
+                index = index + 1
+
+    def insertIntoDatabase(self):
+        cur = dbutil.getCursor()
+
+        electricityQueryString = """
+        INSERT INTO ELECTRICITYREPORT (ID, address_ID, month, year, consumption)
+        VALUES(:1, :2, :3, :4, :5)
+        """
+
+        # put them in the database
+        for (queryString, tuples) in [(addressQueryString, self.addressTuples),
+                                      (gasQueryString, self.gasTuples)]:
+            print "One of the tuples is " + str(tuples[0])
+            print "Going to insert {} tuples now".format(len(tuples))
+            cur.executemany(queryString, tuples)
+        dbutil.closeAndCommit()
+
+
 parser = argparse.ArgumentParser(description='Get filenames')
 parser.add_argument('-l', '--local', action='store_true',
                     help='Pass this flag to connect to \'localhost\'')
 parser.add_argument('--gas', required=True,
                     help='Path to the gas usage json file')
+parser.add_argument('--electricity', required=True,
+                    help='Path to the electricity usage json file')
 args = parser.parse_args()
 
 gasData = JSONData(args.gas)
