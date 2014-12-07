@@ -33,3 +33,7 @@ def naturalGasId(id):
 @app.route('/electricity/<addrs>')
 def whatsuphomie(addrs):
 	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
+
+@app.route('/streetelect/<addrs>')
+def avgstreet(addrs):
+	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
