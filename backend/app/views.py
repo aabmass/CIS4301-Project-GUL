@@ -1,5 +1,6 @@
 from app import address
 from app import naturalgas
+from app import electricity
 from app import app
 from flask import json
 
@@ -35,4 +36,4 @@ def naturalGasId(id):
 
 @app.route('/electricity/<addrs>')
 def electricity(addrs):
-	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
+	return json.jsonify({"electricity": address.findElectricity(addrs)})
