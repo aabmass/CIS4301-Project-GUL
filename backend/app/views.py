@@ -2,7 +2,7 @@ from app import address
 from app import naturalgas
 from app import electricity
 from app import app
-from flask import json
+from flask import json, request
 
 # Sets up the routes, really
 
@@ -16,7 +16,7 @@ def main():
 
 @app.route('/house', methods=['GET'])
 def houseNoAddress():
-	return render_template('house.html', data=request.form['address'])
+	return render_template('house.html', address=request.args.get('address'))
 
 @app.route('/house/<addrs>', methods=['GET'])
 def houseWAddress():
