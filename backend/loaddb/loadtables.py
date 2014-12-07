@@ -300,11 +300,11 @@ class FireRescue(DatabaseTable):
         DatabaseTable.__init__(self, data)
         self.addressTuples = addressTuples
 
-        self.data.setRows([row for row in self.data.getRows() if row['Address'] is not None])
+        self.data.setRows([row for row in self.data.getRows() if row['Location 1']['address'] is not None])
 
         # Lets sort this so our O(n^2) algorithm will be faster
         print "Sorting rows"
-        self.data.getRows().sort(key=lambda row: row['Address'].strip("0"))
+        self.data.getRows().sort(key=lambda row: row['Location 1']['address'])
         
         # Lets remove all entries not in January 2013 now
         # print "Going to remove all extraneous rows from CodeViolations"
@@ -327,18 +327,18 @@ class FireRescue(DatabaseTable):
             # Lets remove elements from self.data.getRows as they are added
             matchFoundIndex = 0
             for iFireRescue, fireRescueRow in enumerate(self.data.getRows()):
-                address = row['Location 1'][1].upper()
-                if (address == None):
+                address = row['Location 1']['address'].upper()
+                if (address is None):
                     continue
-                #print "addrTup: {}\nfireRescueRow:{}".format(addrTup[1], fireRescueRow['Address'].strip())
-                elif (addrTup[1] == address.strip("0")):
+                # print "addrTup: {}\nfireRescueRow:{}".format(addrTup[1], fireRescueRow['Address'].strip())
+                elif (addrTup[1] == address):
                     fireRescueTuple = (index, addrTup[0], fireRescueRow['Response_Date'],
                                     fireRescueRow['Call Type'], fireRescueRow['Unit'])
                     self.tuples.append(fireRescueTuple)
                     print index
                     index = index + 1
                     matchFoundIndex = iFireRescue
-                    break;
+                    break
             if matchFoundIndex != 0:
                 self.data.getRows().pop(matchFoundIndex)
                 matchFoundIndex = 0
@@ -384,14 +384,14 @@ if (not args.skipGasAndAddrAndElec):
     print "Going to insert Addresses and Gas datas into database..."
     addAndGas.insertIntoDatabase()
 
-    print "\nNow starting on electricity"
-    elecData = JSONData(args.electricity)
-    elec = Electricity(elecData, addAndGas.addressTuples)
-    elec.insertIntoDatabase()
+print "\nNow starting on electricity"
+elecData = JSONData(args.electricity)
+elec = Electricity(elecData, addAndGas.addressTuples)
+elec.insertIntoDatabase()
 
-codeVioData = JSONData(args.codevio)
-codeVio = CodeViolations(codeVioData, addAndGas.addressTuples)
-codeVio.insertIntoDatabase()
+# codeVioData = JSONData(args.codevio)
+# codeVio = CodeViolations(codeVioData, addAndGas.addressTuples)
+# codeVio.insertIntoDatabase()
 
 fireRescueData = JSONData(args.firerescue)
 fireRescue = FireRescue(fireRescueData, addAndGas.addressTuples)
