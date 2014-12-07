@@ -32,3 +32,7 @@ def addressId(id):
 @app.route('/naturalgas/<id>')
 def naturalGasId(id):
     return json.jsonify({"naturalgas": naturalgas.findOneByID(id)})
+
+@app.route('/electricity/<addrs>')
+def electricity(addrs):
+	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
