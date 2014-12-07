@@ -1,7 +1,9 @@
 from app import address
 from app import naturalgas
 from app import electricity
+from app import codeviolation
 from app import app
+
 from flask import json, request
 
 # Sets up the routes, really
@@ -26,6 +28,9 @@ def houseWAddress():
 	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
 	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
 	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
+	houseCodeVio = json.jsonify({"CodeViolation": codeviolation.findCodeVio(addrs)})
+
+	streetCodeVio = json.jsonify({"StreetCodeViolation": codeviolation.streetCodeVio(addrs)})
 
 
 	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect})

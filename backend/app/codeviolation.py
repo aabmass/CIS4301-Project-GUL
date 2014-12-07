@@ -10,9 +10,11 @@ def findCodeVio(addrs):
 								address.STREETADDRESS = {}""".format( '\'' + addrs + '\''))
 
 def streetCodeVio(addrs):
+	newAddrs = addrs.split(' ', 1)
+	
 	return dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, Address Where
 		Address.ID = CodeViolationsreport.ADDRESS_ID and 
-		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\'')))
+		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
 
 class CodeViolationsReport(object):
     def __init__(self, id, address_Id, violation,
