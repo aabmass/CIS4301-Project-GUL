@@ -5,6 +5,26 @@ from flask import json
 
 # Sets up the routes, really
 
+from flask import render_template
+
+# Sets up the routes, really
+
+@app.route('/')
+def main():
+	return render_template('../../index.html')
+
+@app.route('/house/')
+def houseNoAddress():
+	return render_template('../../house.html')
+
+@app.route('/')
+def main():
+	return render_template('../../index.html')
+
+@app.route('/house/')
+def houseNoAddress():
+	return render_template('../../house.html')
+	
 @app.route('/address/<id>')
 def addressId(id):
     return json.jsonify({"addresses": address.findOneByID(id)})
