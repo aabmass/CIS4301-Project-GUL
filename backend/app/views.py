@@ -12,11 +12,11 @@ from flask import render_template
 
 @app.route('/')
 def main():
-	return render_template('../../index.html')
+	return render_template('index.html')
 
 @app.route('/house/')
 def houseNoAddress():
-	return render_template('../../house.html')
+	return render_template('house.html')
 
 @app.route('/rerouted')
 def main():
