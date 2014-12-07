@@ -17,13 +17,13 @@ def main():
 def houseNoAddress():
 	return render_template('../../house.html')
 
-@app.route('/')
+@app.route('/rerouted')
 def main():
-	return render_template('../../index.html')
+	return render_template('../../../index.html')
 
-@app.route('/house/')
+@app.route('/rerouted_house/')
 def houseNoAddress():
-	return render_template('../../house.html')
+	return render_template('../../../house.html')
 	
 @app.route('/address/<id>')
 def addressId(id):
