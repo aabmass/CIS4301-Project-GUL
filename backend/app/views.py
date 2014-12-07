@@ -14,9 +14,9 @@ from flask import render_template
 def main():
 	return render_template('index.html')
 
-@app.route('/house/')
-def houseNoAddress():
-	return render_template('house.html')
+# @app.route('/house')
+# def houseNoAddress():
+#	return render_template('house.html')
 
 @app.route('/address/<id>')
 def addressId(id):
