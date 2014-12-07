@@ -4,7 +4,7 @@
   <head>
 
     <title>GUL</title>
-    <link href="src/styles/tattle.css" media="all" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/tattle.css') }}">
     <!--<script src="/assets/application-688f63bdd06aee20bf4ea764cef28045.js"></script>
 <script src="/assets/main-da3bce2f296302bb41fc7f9e08dedcd6.js"></script>
   -->
@@ -14,8 +14,6 @@
 
     <link rel="stylesheet" href="http://use.typekit.net/c/e9b594/1w;chaparral-pro,2,XXw:P:i4,XXn:P:i7,XY8:P:n4,XXk:P:n7;museo-sans,2,Py9:P:i1,Py8:P:n1,PyF:P:n7/d?3bb2a6e53c9684ffdc9a9bf71f5b2a623df248a4a1ae63c32599068f236732e457626403c37dd58f575abe240e77fac9f6a80700cc03279b780ec8dfe933e4b3d3691e96c9c1bfa49083cc6d9c0b5c36780bd1d928bf01fe76adfe29adef7edfacabdc76bfe77bb6dac407c757a45e0c85c050">
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-    <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
     <!--<script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
 
@@ -35,7 +33,7 @@
       <div id="landing-content" class="clearfix">
         <div id="header">
           <h1 id="title"><span id="kern">g</span>ainesville utilities</h1>
-          <img id="logo" alt="Tattle: who owns what" class="animated" src="src/img/icon-plug.png">
+          <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
         <form id="myform" action='house.html'>
