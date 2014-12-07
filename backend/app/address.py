@@ -9,11 +9,6 @@ def findOneByID(id):
                                ADDRESS.ID = {}""".format(id))
 
 
-def findElectricity(addrs):
-    return dbutil.runSQLAsDict(""" SELECT CONSUMPTION FROM ELECTRICITYREPORT, ADDRESS WHERE
-                                ADDRESS.STREETADDRESSS = {} AND 
-                                WHERE ADDRESS.ID = ELECTRICITYREPORT.ADDRESS_ID""".format(addrs))
-
 class Address(object):
     def __init__(self, id, streetAddress, city,
                  coord_Lat, coord_Lon):

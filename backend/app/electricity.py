@@ -5,9 +5,9 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def findElectricity(addrs):
-    return dbutil.runSQLAsDict("""SELECT CONSUMPTION FROM ELECTRICITYREPORT, ADDRESS WHERE
-                               ADDRESS.STREETADDRESS = {} AND 
-                               ADDRESS.ID = ELECTRICITYREPORT.ADDRESS_ID """.format(addrs))
+    return dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
+ Address.StreetAddress = '100 NE 1ST ST' AND
+ Address.ID = ELECTRICITYREPORT.ADDRESS_ID;""")
 
 #class ElectricityReport(object):
 #    def __init__(self, id, address_Id, month,
