@@ -205,7 +205,7 @@ class Electricity(DatabaseTable):
         for addrTup in self.addressTuples:
             # Lets remove elements from self.data.getRows as they are added
             matchFoundIndex = 0
-            for iElecRow, elecRow in enumerate(self.data.getRows()):
+            for iElec, elecRow in enumerate(self.data.getRows()):
                 if (elecRow['KWH Consumption'] == None):
                     continue
                 elif (addrTup[1] == elecRow['ServiceAddress']):
