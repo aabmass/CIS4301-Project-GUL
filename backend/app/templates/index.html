@@ -5,9 +5,6 @@
 
     <title>GUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/tattle.css') }}">
-    <!--<script src="/assets/application-688f63bdd06aee20bf4ea764cef28045.js"></script>
-<script src="/assets/main-da3bce2f296302bb41fc7f9e08dedcd6.js"></script>
-  -->
 
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
@@ -17,14 +14,18 @@
     <!--<script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
 
-    <!-- <link type="" rel="" href="http://s3.amazonaws.com/bucketname/tattle" />
-
-
     <meta content="authenticity_token" name="csrf-param" />
-<meta content="cp2dU28VPmVb+w0Q8xcgcGXLqlK6dlslKgKFoWOWCTE=" name="csrf-token" /> -->
+    <meta content="cp2dU28VPmVb+w0Q8xcgcGXLqlK6dlslKgKFoWOWCTE=" name="csrf-token" /> -->
     <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
+    <script>
+      	function url() {
+		var url = document.getElementById('url').value;
+		location.href=url;
+		return false;
+	}
+    </script>
   </head>
   <body>
 
@@ -36,8 +37,8 @@
           <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
-        <form id="myform" action='house'>
-          <input type="text" id="myinput" placeholder="my address"/>
+        <form id="myform" onsubmit='return url();'>
+          <input type="text" name='url' id="myinput" placeholder="my address"/>
           <input type="submit" value="search" id="mybutton">
         </form>
       </div>
