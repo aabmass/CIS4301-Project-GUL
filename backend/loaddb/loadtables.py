@@ -48,6 +48,15 @@ class JSONData:
     def getRows(self):
         return self.rows
 
+    def setRows(self, newRows):
+        self.rows = newRows
+
+    def removeAllRowsNotMatching(self, conditionFunction):
+        self.rows[:] = [x for x in self.rows if conditionFunction(x)]
+
+    def removeAllRowsMatching(self, conditionFunction):
+        self.rows[:] = [x for x in self.rows if not conditionFunction(x)]
+
 class DatabaseTable(object):
     def __init__(self, data):
         # The data as a dictionary
@@ -120,6 +129,10 @@ class Address(DatabaseTable):
 class AddressAndGas(DatabaseTable):
     def __init__(self, data):
         DatabaseTable.__init__(self, data)
+
+        # First lets sort self.data.getRows() for later
+        print "Sorting rows"
+        self.data.getRows().sort(key=lambda row: row['ServiceAddress'])
         self.makeTuples()
 
     def makeTuples(self):
@@ -127,6 +140,7 @@ class AddressAndGas(DatabaseTable):
         self.gasTuples = []
         # Address and Gas will have the same indices
         index = 1
+
         for row in self.data.getRows():
             # Skip rows with no usage
             if (row['Therm Consumption'] is None):
@@ -166,25 +180,44 @@ class Electricity(DatabaseTable):
     def __init__(self, data, addressTuples):
         DatabaseTable.__init__(self, data)
         self.addressTuples = addressTuples
+
+        # Lets sort this so our O(n^2) algorithm will be faster
+        print "Sorting rows"
+        self.data.getRows().sort(key=lambda row: row['ServiceAddress'])
+        
+        # Lets remove all entries not in January 2013 now
+        print "Going to remove all extraneous rows from Electricity"
+        before = len(self.data.getRows())
+
+        allAddresses = [x[1] for x in self.addressTuples]
+        self.data.removeAllRowsNotMatching(lambda x, addresses=allAddresses:
+                x['Month'] == 'January' and x['Year'] == '2013' and
+                x['ServiceAddress'] in addresses
+            )
+
+        print "Before: {}, After: {}. Going to make tuples".format(before, len(self.data.getRows()))
         self.makeTuples()
 
     def makeTuples(self):
-        self.electricityTuple = []
+        self.electricityTuples = []
 
         index = 1
-        for row in self.data.getRows():
-            # Skip rows with no usage
-            if (row['KWH Consumption'] is None):
-                continue
-            elif (row['Month'] == 'January' and row['Year'] == '2013'):
-                addressTuple = (index, row['ServiceAddress'], row['ServCity'],
-                               row['Location 1'][1], row['Location 1'][2])
-
-                gasTuple = (index, index, row['Month'],
-                           row['Year'], row['KWH Consumption'])
-                self.addressTuples.append(addressTuple)
-                self.gasTuples.append(gasTuple)
-                index = index + 1
+        for addrTup in self.addressTuples:
+            # Lets remove elements from self.data.getRows as they are added
+            matchFoundIndex = 0
+            for iElecRow, elecRow in enumerate(self.data.getRows()):
+                if (elecRow['KWH Consumption'] == None):
+                    continue
+                elif (addrTup[1] == elecRow['ServiceAddress']):
+                    elecTuple = (index, addrTup[0], elecRow['Month'],
+                                 elecRow['Year'], elecRow['KWH Consumption'])
+                    self.electricityTuples.append(elecTuple)
+                    index = index + 1
+                    matchFoundIndex = iElec
+                    break;
+            if matchFoundIndex != 0:
+                self.data.getRows().pop(matchFoundIndex)
+                matchFoundIndex = 0
 
     def insertIntoDatabase(self):
         cur = dbutil.getCursor()
@@ -195,27 +228,35 @@ class Electricity(DatabaseTable):
         """
 
         # put them in the database
-        for (queryString, tuples) in [(addressQueryString, self.addressTuples),
-                                      (gasQueryString, self.gasTuples)]:
-            print "One of the tuples is " + str(tuples[0])
-            print "Going to insert {} tuples now".format(len(tuples))
-            cur.executemany(queryString, tuples)
+        print "One of the tuples is " + str(self.electricityTuples[0])
+        print "Going to insert {} tuples now".format(len(self.electricityTuples))
+        cur.executemany(electricityQueryString, self.electricityTuples)
         dbutil.closeAndCommit()
 
 
 parser = argparse.ArgumentParser(description='Get filenames')
+
+# Required variables
 parser.add_argument('-l', '--local', action='store_true',
                     help='Pass this flag to connect to \'localhost\'')
 parser.add_argument('--gas', required=True,
                     help='Path to the gas usage json file')
 parser.add_argument('--electricity', required=True,
                     help='Path to the electricity usage json file')
+
+# Optional variables
+parser.add_argument('--skipGasAndElec', action='store_true',
+                    help='Pass this flag to skip gas and electricity tables')
+
 args = parser.parse_args()
 
 gasData = JSONData(args.gas)
 addAndGas = AddressAndGas(gasData)
-print "Going to insert Addresses and Gas datas into database..."
-addAndGas.insertIntoDatabase()
+if (not args.skipGasAndElec):
+    print "Going to insert Addresses and Gas datas into database..."
+    addAndGas.insertIntoDatabase()
 
-
-# print pprint(getColumns('/home/aaron/Downloads/electricity.json'))
+print "\nNow starting on electricity"
+elecData = JSONData(args.electricity)
+elec = Electricity(elecData, addAndGas.addressTuples)
+elec.insertIntoDatabase()
