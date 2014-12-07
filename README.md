@@ -63,3 +63,5 @@ Where WaterReport.ID = Address.ID
 AND ElectricityReport.ID = Address.ID
 AND ElectricityReport.Usage = WaterReport.Usage
 AND WaterReport.Month = ElectricityReport.Month
+* Energy consumption by service address (GRU) - https://data.cityofgainesville.org/Environment-Energy/GRU-Customer-Electric-Consumption/gk3k-9435
+* Energy consumption by month - https://data.cityofgainesville.org/Environment-Energy/Electric-Consumption-By-Month/7dsc-hrh4

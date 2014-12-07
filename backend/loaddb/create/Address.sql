@@ -1,5 +1,5 @@
 CREATE TABLE Address (
-    ID              NUMBER(6)      PRIMARY KEY,
+    ID              NUMBER(7)      PRIMARY KEY,
     streetAddress   VARCHAR2(60)   NOT NULL,
     city            VARCHAR2(30)   NOT NULL,
 
