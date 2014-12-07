@@ -22,6 +22,10 @@ def houseNoAddress():
 def addressId(id):
     return json.jsonify({"addresses": address.findOneByID(id)})
 
+@app.route('/getAddressId/<addrs>')
+def getAddressId(addrs):
+    return json.jsonify({"addressId": address.getId(addrs)})
+
 @app.route('/naturalgas/<id>')
 def naturalGasId(id):
     return json.jsonify({"naturalgas": naturalgas.findOneByID(id)})
