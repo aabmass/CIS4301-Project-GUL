@@ -41,4 +41,4 @@ def whatsuphomie(addrs):
 
 @app.route('/streetelect/<addrs>')
 def avgstreet(addrs):
-	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
+	return json.jsonify({"electricity": electricity.streetElectricity(addrs)})
