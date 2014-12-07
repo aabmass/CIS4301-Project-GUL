@@ -21,7 +21,7 @@ def houseNoAddress():
 @app.route('/house/<addrs>', methods=['GET'])
 def houseWAddress():
 	houseId = json.jsonify({"info": address.getId(addrs)})
-	return render_template('house.html', id = houseId)
+	return render_template('house.html', id = houseId, variable2 = "hello" )
 
 @app.route('/address/<id>')
 def addressId(id):
