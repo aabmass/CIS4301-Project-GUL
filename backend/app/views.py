@@ -28,17 +28,24 @@ def houseWAddress():
 	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
 	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
 	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
+   #houseWater = json.jsonify({"Water": water.findWater(addrs)})
 	houseCodeVio = json.jsonify({"CodeViolation": codeviolation.findCodeVio(addrs)})
 
+
 	streetCodeVio = json.jsonify({"StreetCodeViolation": codeviolation.streetCodeVio(addrs)})
+
+	totalCityElect = json.jsonify({"totalCityElect": electricity.cityTotalElect})
+	totalCityNatGas = json.jsonify({"totalCityNatGas": naturalgas.cityTotalNatGas})
+	#totalCityWater = json.jsonify({"totalCityWater": water.cityTotalWater})
 
 
 	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect})
 	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas})
+	#avgCityWater = json.jsonify({"avgCityWater": water.cityAvgWater})
 
 	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
 	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
-	
+	#avgStreetWater = json.jsonify({"avgCityWater": water.streetWater(addrs)})
 
 
 
@@ -71,3 +78,7 @@ def getCodeVio(addrs):
 @app.route('/codeViolationStreet/<addrs>')
 def getCodeVio(addrs):
 	return json.jsonify({"codeViolation": codeviolation.streetCodeVio(addrs)})
+
+@app.route('/TUPLES')
+def totalTuples():
+	return json.jsonify({"totalTuples": totaltuples.totalTuples()})

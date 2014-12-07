@@ -4,6 +4,8 @@ sys.path.append("../")
 
 from loaddb import dbutil
 
+def cityTotalNatGas():
+	return dbutil.runSQLAsDict("""SELECT SUM(Consumption) from NaturalGasReport""")
 
 def cityAvgNatGas():
 	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport""")

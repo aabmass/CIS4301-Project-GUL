@@ -5,6 +5,9 @@ sys.path.append("../")
 from loaddb import dbutil
 
 
+def cityTotalElect():
+	return dbutil.runSQLAsDict("""SELECT SUM(Consumption) from ELECTRICITYREPORT""")
+
 def cityAvgElect():
 	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT""")
 
