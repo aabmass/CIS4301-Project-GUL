@@ -18,14 +18,6 @@ def main():
 def houseNoAddress():
 	return render_template('house.html')
 
-@app.route('/rerouted')
-def main():
-	return render_template('../../../index.html')
-
-@app.route('/rerouted_house/')
-def houseNoAddress():
-	return render_template('../../../house.html')
-	
 @app.route('/address/<id>')
 def addressId(id):
     return json.jsonify({"addresses": address.findOneByID(id)})
@@ -35,5 +27,5 @@ def naturalGasId(id):
     return json.jsonify({"naturalgas": naturalgas.findOneByID(id)})
 
 @app.route('/electricity/<addrs>')
-def electricity(addrs):
-	return json.jsonify({"electricity": address.findElectricity(addrs)})
+def whatsuphomie(addrs):
+	return json.jsonify({"electricity": electricity.findElectricity(addrs)})
