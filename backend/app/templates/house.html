@@ -52,8 +52,12 @@
           <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
-        <form id="myform">
-          <input type="text" id="myinput" placeholder="my address"/>
+
+	<!-- <p>The address we have is {{ address }} </p> --> <!-- GETS HOUSE ADDRESS -->        
+
+
+	<form id="myform" action='/house'>
+          <input type="text" id="myinput" name='address' placeholder="my address"/>
           <input type="submit" value="search" id="mybutton">
         </form>
       </div>
@@ -70,11 +74,11 @@
 
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>your search</p>
-            <p class='category ng_binding'>3705 SW 20th St</p>
+            <p class='category ng_binding'>{{ address }}</p>
             <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
             <p class='content-collapsed ng-binding'>
-              3705 SW 20th St, Gainesville FL, 32608. We have information for
-              <strong>5</strong> months in this house's history. This address
+              {{ address }}. We have information for
+              <strong>1</strong> months in this house's history. This address
               uses approximately 200 KW of energy, and 1,000 gallons
               of water, each moth.
             </p>
