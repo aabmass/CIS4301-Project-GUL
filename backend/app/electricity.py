@@ -4,6 +4,10 @@ sys.path.append("../")
 
 from loaddb import dbutil
 
+
+def cityAvgElect():
+	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT""")
+
 def findElectricity(addrs):
     return dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
  Address.ID = ELECTRICITYREPORT.ADDRESS_ID AND

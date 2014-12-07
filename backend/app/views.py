@@ -20,7 +20,23 @@ def houseNoAddress():
 
 @app.route('/house/<addrs>', methods=['GET'])
 def houseWAddress():
-	houseId = json.jsonify({"info": address.getId(addrs)})
+
+
+
+	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
+	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
+	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
+
+
+	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect})
+	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas})
+
+	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
+	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
+	
+
+
+
 	return render_template('house.html', id = houseId)
 
 @app.route('/address/<id>')
@@ -42,3 +58,11 @@ def whatsuphomie(addrs):
 @app.route('/streetelect/<addrs>')
 def avgstreet(addrs):
 	return json.jsonify({"electricity": electricity.streetElectricity(addrs)})
+
+@app.route('/codeViolation/<addrs>')
+def getCodeVio(addrs):
+	return json.jsonify({"codeViolation": codeviolation.findCodeVio(addrs)})
+
+@app.route('/codeViolationStreet/<addrs>')
+def getCodeVio(addrs):
+	return json.jsonify({"codeViolation": codeviolation.streetCodeVio(addrs)})

@@ -4,9 +4,22 @@ sys.path.append("../")
 
 from loaddb import dbutil
 
-def findOneByID(id):
-    return dbutil.runSQLAsDict("""SELECT * FROM NATURALGASREPORT WHERE
-                               NATURALGASREPORT.ID = {}""".format(id))
+
+def cityAvgNatGas():
+	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport""")
+
+def findNatGas(addrs):
+    return dbutil.runSQLAsDict("""SELECT Consumption from NaturalGasReport, Address Where
+ Address.ID = NaturalGasReport.ADDRESS_ID AND
+ Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
+
+def streetNatGas(addrs):
+
+	newAddrs = addrs.split(' ', 1)
+
+	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport, Address Where
+		Address.ID = NaturalGasReport.ADDRESS_ID and 
+		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
 
 class NaturalGasReport(object):
     def __init__(self, id, address_Id, month,
