@@ -12,7 +12,7 @@ def findElectricity(addrs):
 def streetElectricity(addrs):
 	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT, Address Where
 		Address.ID = ElectricityReport.ADDRESS_ID and 
-		Address.StreetAddress LIKE {}""".format('\'% ' + addrs + '\''))
+		Address.StreetAddress LIKE {}""".format('\''+'% ' + addrs + '\''))
 
 #class ElectricityReport(object):
 #    def __init__(self, id, address_Id, month,

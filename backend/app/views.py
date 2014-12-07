@@ -14,11 +14,11 @@ from flask import render_template
 def main():
 	return render_template('index.html')
 
-@app.route('/house')
+@app.route('/house', methods=['GET'])
 def houseNoAddress():
-	return render_template('house.html')
+	return render_template('house.html', data=request.form['address'])
 
-@app.route('/house/<addrs>')
+@app.route('/house/<addrs>', methods=['GET'])
 def houseWAddress():
 	houseId = json.jsonify({"info": address.getId(addrs)})
 	return render_template('house.html', id = houseId)
