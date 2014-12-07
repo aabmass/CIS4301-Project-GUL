@@ -17,7 +17,15 @@
     <meta content="authenticity_token" name="csrf-param" />
     <meta content="cp2dU28VPmVb+w0Q8xcgcGXLqlK6dlslKgKFoWOWCTE=" name="csrf-token" />
     <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script> 
+    <script>
+	function dosomething() {
+		var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");	
+		alert(newstring);
+		location.href = "http://thunder.cise.ufl.edu:1111/house/"+newstring;
+	}
+    </script>
+
 
   </head>
   <body>
@@ -29,9 +37,9 @@
           <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
-        <form id="myform" action='house'>
+        <form id="myform">
           <input type="text" name='address' id="myinput" placeholder="my address"/>
-          <input type="submit" value="search" id="mybutton">
+          <input type="button" onclick="dosomething()" value="search" id="mybutton">
         </form>
       </div>
     </div>

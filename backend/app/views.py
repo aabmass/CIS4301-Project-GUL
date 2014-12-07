@@ -3,6 +3,7 @@ from app import naturalgas
 from app import electricity
 from app import codeviolation
 from app import app
+
 from flask import json, request
 
 # Sets up the routes, really
@@ -15,27 +16,33 @@ from flask import render_template
 def main():
 	return render_template('index.html')
 
-@app.route('/house', methods=['GET'])
-def houseNoAddress():
-	return render_template('house.html', address=request.args.get('address'))
-
-@app.route('/house/<addrs>', methods=['GET'])
-def houseWAddress():
+@app.route('/house/<addrs>')
+def houseWAddress(addrs):
 	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
 	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
 	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
+	houseCodeVio = json.jsonify({"CodeViolation": codeviolation.findCodeVio(addrs)})
+
+	streetCodeVio = json.jsonify({"StreetCodeViolation": codeviolation.streetCodeVio(addrs)})
 
 
-	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect})
-	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas})
+	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect()})
+	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas()})
 
 	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
 	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
 	
 
+	print(houseInfo)
+	print(houseElect)
+	print(houseGas)
 
+	data = { houseInfo, houseElect, houseGas }
 
-	return render_template('house.html', id = houseId)
+	#return json.jsonify({"data": data})
+	return render_template('house.html', data = {houseInfo, houseElect,
+			houseGas, houseCodeVio, streetCodeVio,avgCityElect, 
+			avgCityNatGas, avgStreetElect, avgStreetNatGas});
 
 @app.route('/address/<id>')
 def addressId(id):
