@@ -6,7 +6,7 @@ from loaddb import dbutil
 
 
 def cityTotalElect():
-	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) from ELECTRICITYREPORT""")
+	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) as tot from ELECTRICITYREPORT""")
 
 	if x:
 		return x
@@ -14,7 +14,7 @@ def cityTotalElect():
 		return "N/A"
 
 def cityAvgElect():
-	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT""")
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) as avg from ELECTRICITYREPORT""")
 
 	if x:
 		return x
@@ -35,7 +35,7 @@ def streetElectricity(addrs):
 
 	newAddrs = addrs.split(' ', 1)
 
-	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT, Address Where
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) as avgSt from ELECTRICITYREPORT, Address Where
 		Address.ID = ElectricityReport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
 

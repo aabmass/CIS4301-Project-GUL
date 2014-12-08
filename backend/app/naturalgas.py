@@ -5,7 +5,7 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def cityTotalNatGas():
-	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) from NaturalGasReport""")
+	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) as tot from NaturalGasReport""")
 
 	if x:
 		return x
@@ -13,7 +13,7 @@ def cityTotalNatGas():
 		return "N/A"
 
 def cityAvgNatGas():
-	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport""")
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) as avg from NaturalGasReport""")
 
 	if x:
 		return x
@@ -34,7 +34,7 @@ def streetNatGas(addrs):
 
 	newAddrs = addrs.split(' ', 1)
 
-	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport, Address Where
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) as avgSt from NaturalGasReport, Address Where
 		Address.ID = NaturalGasReport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
 
