@@ -104,5 +104,7 @@ def totalTuples():
 	return json.jsonify({"totalTuples": totaltuples.totalTuples()})
 
 @app.route('/Water/<addrs>')
-def water(addrs):
-	return json.jsonify({"waterpls": water.findWater(addrs)})
+
+def FindWater(addrs):
+	return json.jsonify({"water": water.findWater(addrs)})
+
