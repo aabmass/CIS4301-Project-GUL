@@ -233,6 +233,64 @@ class Electricity(DatabaseTable):
         cur.executemany(electricityQueryString, self.electricityTuples)
         dbutil.closeAndCommit()
 
+class PotableWater(DatabaseTable):
+    def __init__(self, data, addressTuples):
+        DatabaseTable.__init__(self, data)
+        self.addressTuples = addressTuples
+
+        # Lets sort this so our O(n^2) algorithm will be faster
+        print "Sorting rows"
+        self.data.getRows().sort(key=lambda row: row['ServiceAddress'])
+        
+        # Lets remove all entries not in January 2013 now
+        print "Going to remove all extraneous rows from Water"
+        before = len(self.data.getRows())
+
+        allAddresses = [x[1] for x in self.addressTuples]
+        self.data.removeAllRowsNotMatching(lambda x, addresses=allAddresses:
+                x['Month'] == 'January' and x['Year'] == '2013' and
+                x['ServiceAddress'] in addresses
+            )
+
+        print "Before: {}, After: {}. Going to make tuples".format(before, len(self.data.getRows()))
+        self.makeTuples()
+
+    def makeTuples(self):
+        self.tuples = []
+
+        index = 1
+        for addrTup in self.addressTuples:
+            # Lets remove elements from self.data.getRows as they are added
+            matchFoundIndex = 0
+            for iWater, waterRow in enumerate(self.data.getRows()):
+                if (waterRow['Potable Water Consumption'] == None):
+                    continue
+                elif (addrTup[1] == waterRow['ServiceAddress']):
+                    waterTuple = (index, addrTup[0], waterRow['Month'],
+                                  waterRow['Year'], waterRow['Potable Water Consumption'])
+                    self.tuples.append(waterTuple)
+                    print index
+                    index = index + 1
+                    matchFoundIndex = iWater
+                    break;
+            if matchFoundIndex != 0:
+                self.data.getRows().pop(matchFoundIndex)
+                matchFoundIndex = 0
+
+    def insertIntoDatabase(self):
+        cur = dbutil.getCursor()
+
+        queryString = """
+        INSERT INTO WATERREPORT (ID, address_ID, month, year, consumption)
+        VALUES(:1, :2, :3, :4, :5)
+        """
+
+        # put them in the database
+        print "One of the tuples is " + str(self.tuples[0])
+        print "Going to insert {} tuples now".format(len(self.tuples))
+        cur.executemany(queryString, self.tuples)
+        dbutil.closeAndCommit()
+
 class CodeViolations(DatabaseTable):
     def __init__(self, data, addressTuples):
         DatabaseTable.__init__(self, data)
@@ -300,15 +358,18 @@ class FireRescue(DatabaseTable):
         DatabaseTable.__init__(self, data)
         self.addressTuples = addressTuples
 
-        self.data.setRows([row for row in self.data.getRows() if row['Location 1']['address'] is not None])
+        print "\n\nGoing to print rows:"
+        
+        print json.loads(self.data.getRows()[0]['Location 1'][0])
+        self.data.setRows([row for row in self.data.getRows() if row['Location 1'][0] is not None])
 
         # Lets sort this so our O(n^2) algorithm will be faster
         print "Sorting rows"
-        self.data.getRows().sort(key=lambda row: row['Location 1']['address'])
+        self.data.getRows().sort(key=lambda row: json.loads(row['Location 1'][0])['address'])
         
         # Lets remove all entries not in January 2013 now
         # print "Going to remove all extraneous rows from CodeViolations"
-        # before = len(self.data.getRows())
+        before = len(self.data.getRows())
 
         # allAddresses = [x[1] for x in self.addressTuples]
         # self.data.removeAllRowsNotMatching(lambda x, addresses=allAddresses:
@@ -327,7 +388,7 @@ class FireRescue(DatabaseTable):
             # Lets remove elements from self.data.getRows as they are added
             matchFoundIndex = 0
             for iFireRescue, fireRescueRow in enumerate(self.data.getRows()):
-                address = row['Location 1']['address'].upper()
+                address = json.loads(fireRescueRow['Location 1'][0])['address'].upper()
                 if (address is None):
                     continue
                 # print "addrTup: {}\nfireRescueRow:{}".format(addrTup[1], fireRescueRow['Address'].strip())
@@ -371,6 +432,8 @@ parser.add_argument('--codevio', required=True,
                     help='Path to the code violations json file')
 parser.add_argument('--firerescue', required=True,
                     help='Path to the fire rescue/ems json file')
+parser.add_argument('--potablewater', required=True,
+                    help='Path to the potable water json file')
 
 # Optional variables
 parser.add_argument('--skipGasAndAddrAndElec', action='store_true',
@@ -384,14 +447,18 @@ if (not args.skipGasAndAddrAndElec):
     print "Going to insert Addresses and Gas datas into database..."
     addAndGas.insertIntoDatabase()
 
-print "\nNow starting on electricity"
-elecData = JSONData(args.electricity)
-elec = Electricity(elecData, addAndGas.addressTuples)
-elec.insertIntoDatabase()
+# print "\nNow starting on electricity"
+# elecData = JSONData(args.electricity)
+# elec = Electricity(elecData, addAndGas.addressTuples)
+# elec.insertIntoDatabase()
 
 # codeVioData = JSONData(args.codevio)
 # codeVio = CodeViolations(codeVioData, addAndGas.addressTuples)
 # codeVio.insertIntoDatabase()
 
-fireRescueData = JSONData(args.firerescue)
-fireRescue = FireRescue(fireRescueData, addAndGas.addressTuples)
+#fireRescueData = JSONData(args.firerescue)
+# fireRescue = FireRescue(fireRescueData, addAndGas.addressTuples)
+
+potableWaterData = JSONData(args.potablewater)
+potableWater = PotableWater(potableWaterData, addAndGas.addressTuples)
+potableWater.insertIntoDatabase()
