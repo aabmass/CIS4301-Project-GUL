@@ -19,10 +19,10 @@ def findWater(addrs):
 	 Address.ID = WaterReport.ADDRESS_ID AND
  	 Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
 
-    if x == "[]" 
-    	return "Sorry no information available"
-    else
-    	return x
+    if x:
+	return x
+    else: 
+    	return "N/A"
 
 
 def streetWater(addrs):
