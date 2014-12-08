@@ -11,8 +11,9 @@ def totalTuples():
 	totElect = dbutil.runSQLAsDict("""SELECT Count(ID) from Electricityreport""")
 	totNatGas = dbutil.runSQLAsDict("""SELECT Count(ID) from NaturalGasReport""")
 	totCodeVio = dbutil.runSQLAsDict("""SELECT Count(ID) from CodeViolationsReport""")
-	#totWater = dbutil.runSQLAsDict("""SELECT Count(ID) from WaterReport""")
+	totWater = dbutil.runSQLAsDict("""SELECT Count(ID) from WaterReport""")
 
-	total = totAddress + totElect + totNatGas + totCodeVio
+	total = totAddress + totElect + totNatGas + totCodeVio + totWater
+	numtotal = int(total)
 
-	return total
+	return numtotal
