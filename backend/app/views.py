@@ -21,6 +21,7 @@ def main():
 @app.route('/house/<addrs>')
 def houseWAddress(addrs):
 	data = {
+		"addrs":		addrs,
 		"info": 		address.getInfo(addrs),
 
 		"electricity": 		electricity.findElectricity(addrs),
@@ -41,16 +42,13 @@ def houseWAddress(addrs):
 		"streetCodeViolation":	codeviolation.streetCodeVio(addrs)
 	}
 
-#	return { "data": data }
 	return render_template('house.html', data = data )
-#	return render_template('house.html', data = {houseInfo, houseElect, houseWater,
-#			houseGas, houseCodeVio, streetCodeVio,avgCityElect, avgCityWater,
-#			avgCityNatGas, avgStreetElect, avgStreetWater, avgStreetNatGas});
 
 
 @app.route('/data/<addrs>')
 def houseData(addrs):
 	data = {
+                "addrs":                addrs,
 		"info":                 address.getInfo(addrs),
 
 		"electricity":          electricity.findElectricity(addrs),

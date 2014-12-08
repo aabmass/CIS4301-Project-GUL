@@ -27,7 +27,7 @@
       <script type="text/javascript">
         function initialize() {
           var mapOptions = {
-            center: { lat: 29.6862705, lng: -82.319746},
+            center: { lat: {{ data.info[0].COORD_LAT }}, lng: {{data.info[0].COORD_LON }} },
             zoom: 12
           };
           var map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -53,9 +53,6 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	<!-- <p>The address we have is {{ data.info }} </p> --> <!-- GETS HOUSE ADDRESS -->        
-
-
 	<form id="myform" onsubmit="dosomething()">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
           <input type="submit" value="search" id="mybutton">
@@ -74,17 +71,15 @@
 
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>your search</p>
-            <p class='category ng_binding'>{{ data  }}</p>
+            <p class='category ng_binding'>{{ data.address  }}</p>
             <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
             <p class='content-collapsed ng-binding'>
               1234. We have information for
               <strong>1</strong> months in this house's history. This address
-              uses approximately 200 KW of energy, and 1,000 gallons
-              of water, each moth.
+              uses approximately {{ data.electricity[0].CONCUMPTION }} KW/hour of energy, 
+		{{ data.naturalGas[0].CONSUMPTION }} gallons of water, and
+		{{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each moth.
             </p>
-	    	<p>
-			{{ data.houseInfo }}
-		</p>
 
             <div id="map-canvas"></div>
             <p hidden>
