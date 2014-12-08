@@ -3,6 +3,7 @@ from app import naturalgas
 from app import electricity
 from app import codeviolation
 from app import totaltuples
+from app import water
 from app import app
 
 from flask import json, request
@@ -22,7 +23,7 @@ def houseWAddress(addrs):
 	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
 	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
 	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
-   #houseWater = json.jsonify({"Water": water.findWater(addrs)})
+    houseWater = json.jsonify({"Water": water.findWater(addrs)})
 	houseCodeVio = json.jsonify({"CodeViolation": codeviolation.findCodeVio(addrs)})
 
 
@@ -30,17 +31,17 @@ def houseWAddress(addrs):
 
 	totalCityElect = json.jsonify({"totalCityElect": electricity.cityTotalElect})
 	totalCityNatGas = json.jsonify({"totalCityNatGas": naturalgas.cityTotalNatGas})
-	#totalCityWater = json.jsonify({"totalCityWater": water.cityTotalWater})
+	totalCityWater = json.jsonify({"totalCityWater": water.cityTotalWater})
 
 
 	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect()})
 	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas()})
-	#avgCityWater = json.jsonify({"avgCityWater": water.cityAvgWater})
+	avgCityWater = json.jsonify({"avgCityWater": water.cityAvgWater})
 
 
 	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
 	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
-	#avgStreetWater = json.jsonify({"avgCityWater": water.streetWater(addrs)})
+	avgStreetWater = json.jsonify({"avgCityWater": water.streetWater(addrs)})
 
 	print(houseInfo)
 	print(houseElect)
@@ -49,9 +50,9 @@ def houseWAddress(addrs):
 	data = { houseInfo, houseElect, houseGas }
 
 	#return json.jsonify({"data": data})
-	return render_template('house.html', data = {houseInfo, houseElect,
-			houseGas, houseCodeVio, streetCodeVio,avgCityElect, 
-			avgCityNatGas, avgStreetElect, avgStreetNatGas});
+	return render_template('house.html', data = {houseInfo, houseElect, houseWater,
+			houseGas, houseCodeVio, streetCodeVio,avgCityElect, avgCityWater,
+			avgCityNatGas, avgStreetElect, avgStreetWater, avgStreetNatGas});
 
 @app.route('/address/<id>')
 def addressId(id):
