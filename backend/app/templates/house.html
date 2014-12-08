@@ -26,16 +26,20 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_7TfRRWFPYaAM0z5R4G2jhD5O10J90AE"></script>
       <script type="text/javascript">
         function initialize() {
-          var mapOptions = {
+          var myLatlng = new google.maps.LatLng( {{ data.info[0].COORD_LAT }}, {{data.info[0].COORD_LON }} );
+
+	  var mapOptions = {
             center: { lat: {{ data.info[0].COORD_LAT }}, lng: {{data.info[0].COORD_LON }} },
             zoom: 12
           };
           var map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
+	  
+	  /*
 	  var marker = new google.maps.Marker({
-		position: mapOptions.center,
-		map = map,
-		title = "This House"
+		position: myLatlng,
+		map = map
+	  }); */
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -139,6 +143,46 @@
 
     <script>
       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+      
+      var waterChart = {
+	labels: ["This House", "The Street", "The City"],
+	datasets : [{
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(220,220,220,0.75)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data : [ {{ data.water[0].CONSUMPTION }}, 
+		{{ data.avgStreetWater[0].AVG(CONSUMPTION) }},
+		{{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+        }]
+      }
+
+      var gasChart = {
+        labels: ["This House", "The Street", "The City"],
+        datasets : [{
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(220,220,220,0.75)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data : [ {{ data.water[0].CONSUMPTION }}, 
+                {{ data.avgStreetWater[0].AVG(CONSUMPTION) }},      
+                {{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+        }]
+      }
+
+      var electricityChart = {
+        labels: ["This House", "The Street", "The City"],
+        datasets : [{
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(220,220,220,0.75)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data : [ {{ data.water[0].CONSUMPTION }}, 
+                {{ data.avgStreetWater[0].AVG(CONSUMPTION) }},      
+                {{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+        }]
+      }
+
       var barChartData = {
         labels : ["January","February","March","April","May","June","July"],
         datasets : [{
@@ -151,17 +195,17 @@
       }
       window.onload = function(){
         var ctx_water = document.getElementById("water_canvas").getContext("2d");
-        window.myBar = new Chart(ctx_water).Bar(barChartData, {
+        window.myBar = new Chart(ctx_water).Bar(waterChart, {
           responsive : true
         });
 
         var ctx_elec = document.getElementById("elec_canvas").getContext("2d");
-        window.myBar = new Chart(ctx_elec).Bar(barChartData, {
+        window.myBar = new Chart(ctx_elec).Bar(electricityChart, {
           responsive : true
         });
 
         var ctx_natgas = document.getElementById("natgas_canvas").getContext("2d");
-        window.myBar = new Chart(ctx_natgas).Bar(barChartData, {
+        window.myBar = new Chart(ctx_natgas).Bar(gasChart, {
           responsive : true
         });
         }
