@@ -20,39 +20,56 @@ def main():
 
 @app.route('/house/<addrs>')
 def houseWAddress(addrs):
-	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
-	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
-	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
-    houseWater = json.jsonify({"Water": water.findWater(addrs)})
-	houseCodeVio = json.jsonify({"CodeViolation": codeviolation.findCodeVio(addrs)})
+	data = {
+		"addrs":		addrs,
+		"info": 		address.getInfo(addrs),
+
+		"electricity": 		electricity.findElectricity(addrs),
+		"totalCityElec":	electricity.cityTotalElect(),
+		"avgCityElec":		electricity.cityAvgElect(),	
+		"avgStreetElec":	electricity.streetElectricity(addrs),
+
+		"naturalGas":		naturalgas.findNatGas(addrs),
+		"totalCityNatGas":	naturalgas.cityTotalNatGas(),
+		"avgStreetNatGas":	naturalgas.streetNatGas(addrs),
+
+		"water":		water.findWater(addrs),
+		"totalCityWater":	water.cityTotalWater(),
+		"avgCityWater":		water.cityAvgWater(),
+		"avgStreetWater":	water.streetWater(addrs),
+
+		"codeViolation":	codeviolation.findCodeVio(addrs),
+		"streetCodeViolation":	codeviolation.streetCodeVio(addrs)
+	}
+
+	return render_template('house.html', data = data )
 
 
-	streetCodeVio = json.jsonify({"StreetCodeViolation": codeviolation.streetCodeVio(addrs)})
+@app.route('/data/<addrs>')
+def houseData(addrs):
+	data = {
+                "addrs":                addrs,
+		"info":                 address.getInfo(addrs),
 
-	totalCityElect = json.jsonify({"totalCityElect": electricity.cityTotalElect})
-	totalCityNatGas = json.jsonify({"totalCityNatGas": naturalgas.cityTotalNatGas})
-	totalCityWater = json.jsonify({"totalCityWater": water.cityTotalWater})
+		"electricity":          electricity.findElectricity(addrs),
+		"totalCityElec":        electricity.cityTotalElect(),
+		"avgCityElec":          electricity.cityAvgElect(),
+		"avgStreetElec":        electricity.streetElectricity(addrs),
 
+		"naturalGas":           naturalgas.findNatGas(addrs),
+		"totalCityNatGas":      naturalgas.cityTotalNatGas(),
+		"avgStreetNatGas":      naturalgas.streetNatGas(addrs),
 
-	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect()})
-	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas()})
-	avgCityWater = json.jsonify({"avgCityWater": water.cityAvgWater})
+		"water":                water.findWater(addrs),
+		"totalCityWater":       water.cityTotalWater(),
+		"avgCityWater":         water.cityAvgWater(),
+		"avgStreetWater":       water.streetWater(addrs),
 
+		"codeViolation":        codeviolation.findCodeVio(addrs),
+		"streetCodeViolation":  codeviolation.streetCodeVio(addrs)
+	}
 
-	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
-	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
-	avgStreetWater = json.jsonify({"avgCityWater": water.streetWater(addrs)})
-
-	print(houseInfo)
-	print(houseElect)
-	print(houseGas)
-
-	data = { houseInfo, houseElect, houseGas }
-
-	#return json.jsonify({"data": data})
-	return render_template('house.html', data = {houseInfo, houseElect, houseWater,
-			houseGas, houseCodeVio, streetCodeVio,avgCityElect, avgCityWater,
-			avgCityNatGas, avgStreetElect, avgStreetWater, avgStreetNatGas});
+	return json.jsonify({ "data": data })
 
 @app.route('/address/<id>')
 def addressId(id):
