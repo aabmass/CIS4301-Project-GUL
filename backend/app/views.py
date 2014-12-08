@@ -85,3 +85,7 @@ def getCodeVioStreet(addrs):
 @app.route('/TUPLES')
 def totalTuples():
 	return json.jsonify({"totalTuples": totaltuples.totalTuples()})
+
+@app.route('/Water/<addrs>')
+def totalTuples(addrs):
+	return json.jsonify({"waterpls": water.findWater(addrs)})
