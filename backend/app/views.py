@@ -2,6 +2,7 @@ from app import address
 from app import naturalgas
 from app import electricity
 from app import codeviolation
+from app import totaltuples
 from app import app
 
 from flask import json, request
