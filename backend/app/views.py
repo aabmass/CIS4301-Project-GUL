@@ -16,15 +16,8 @@ from flask import render_template
 def main():
 	return render_template('index.html')
 
-@app.route('/house', methods=['GET'])
-def houseNoAddress():
-	return render_template('house.html', address=request.args.get('address'))
-
-@app.route('/house/<addrs>', methods=['GET'])
-def houseWAddress():
-
-
-
+@app.route('/house/<addrs>')
+def houseWAddress(addrs):
 	houseInfo = json.jsonify({"info": address.getInfo(addrs)})
 	houseElect = json.jsonify({"electricity": electricity.findElectricity(addrs)})
 	houseGas = json.jsonify({"NaturalGas": naturalgas.findNatGas(addrs)})
@@ -39,17 +32,25 @@ def houseWAddress():
 	#totalCityWater = json.jsonify({"totalCityWater": water.cityTotalWater})
 
 
-	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect})
-	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas})
+	avgCityElect = json.jsonify({"avgCityElect": electricity.cityAvgElect()})
+	avgCityNatGas = json.jsonify({"avgCityNatGas": naturalgas.cityAvgNatGas()})
 	#avgCityWater = json.jsonify({"avgCityWater": water.cityAvgWater})
+
 
 	avgStreetElect = json.jsonify({"avgStreetElect": electricity.streetElectricity(addrs)})
 	avgStreetNatGas = json.jsonify({"avgStreetNatGas": naturalgas.streetNatGas(addrs)})
 	#avgStreetWater = json.jsonify({"avgCityWater": water.streetWater(addrs)})
 
+	print(houseInfo)
+	print(houseElect)
+	print(houseGas)
 
+	data = { houseInfo, houseElect, houseGas }
 
-	return render_template('house.html', id = houseId)
+	#return json.jsonify({"data": data})
+	return render_template('house.html', data = {houseInfo, houseElect,
+			houseGas, houseCodeVio, streetCodeVio,avgCityElect, 
+			avgCityNatGas, avgStreetElect, avgStreetNatGas});
 
 @app.route('/address/<id>')
 def addressId(id):
@@ -76,7 +77,7 @@ def getCodeVio(addrs):
 	return json.jsonify({"codeViolation": codeviolation.findCodeVio(addrs)})
 
 @app.route('/codeViolationStreet/<addrs>')
-def getCodeVio(addrs):
+def getCodeVioStreet(addrs):
 	return json.jsonify({"codeViolation": codeviolation.streetCodeVio(addrs)})
 
 @app.route('/TUPLES')

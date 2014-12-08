@@ -53,10 +53,10 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	<!-- <p>The address we have is {{ address }} </p> --> <!-- GETS HOUSE ADDRESS -->        
+	<!-- <p>The address we have is 1234 </p> --> <!-- GETS HOUSE ADDRESS -->        
 
 
-	<form id="myform" action='/house'>
+	<form id="myform" onsubmit="dosomething()">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
           <input type="submit" value="search" id="mybutton">
         </form>
@@ -74,14 +74,18 @@
 
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>your search</p>
-            <p class='category ng_binding'>{{ address }}</p>
+            <p class='category ng_binding'>1234</p>
             <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
             <p class='content-collapsed ng-binding'>
-              {{ address }}. We have information for
+              1234. We have information for
               <strong>1</strong> months in this house's history. This address
               uses approximately 200 KW of energy, and 1,000 gallons
               of water, each moth.
             </p>
+	    	<p>
+			{{ data.houseInfo }}
+		</p>
+
             <div id="map-canvas"></div>
             <p hidden>
               That is 87% of the neighborhood's average usage. 39% of their
