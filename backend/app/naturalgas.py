@@ -5,23 +5,43 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def cityTotalNatGas():
-	return dbutil.runSQLAsDict("""SELECT SUM(Consumption) from NaturalGasReport""")
+	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) from NaturalGasReport""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def cityAvgNatGas():
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport""")
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def findNatGas(addrs):
-    return dbutil.runSQLAsDict("""SELECT Consumption from NaturalGasReport, Address Where
+    x = dbutil.runSQLAsDict("""SELECT Consumption from NaturalGasReport, Address Where
  Address.ID = NaturalGasReport.ADDRESS_ID AND
  Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
+
+    if x:
+		return x
+	else:
+		return "N/A"
 
 def streetNatGas(addrs):
 
 	newAddrs = addrs.split(' ', 1)
 
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport, Address Where
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from NaturalGasReport, Address Where
 		Address.ID = NaturalGasReport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 class NaturalGasReport(object):
     def __init__(self, id, address_Id, month,
