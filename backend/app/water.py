@@ -6,10 +6,20 @@ from loaddb import dbutil
 
 
 def cityTotalWater():
-	return dbutil.runSQLAsDict("""SELECT SUM(Consumption) from WaterReport""")
+	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) from WaterReport""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def cityAvgWater():
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from WaterReport""")
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from WaterReport""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def findWater(addrs):
 
@@ -29,7 +39,12 @@ def streetWater(addrs):
 
 	newAddrs = addrs.split(' ', 1)
 
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from WaterReport, Address Where
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from WaterReport, Address Where
 		Address.ID = WaterReport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
+
+	if x:
+		return x
+	else:
+		return "N/A"
 

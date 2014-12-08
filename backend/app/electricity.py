@@ -6,23 +6,43 @@ from loaddb import dbutil
 
 
 def cityTotalElect():
-	return dbutil.runSQLAsDict("""SELECT SUM(Consumption) from ELECTRICITYREPORT""")
+	x = dbutil.runSQLAsDict("""SELECT SUM(Consumption) from ELECTRICITYREPORT""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def cityAvgElect():
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT""")
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT""")
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 def findElectricity(addrs):
-    return dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
+    x = dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
  Address.ID = ELECTRICITYREPORT.ADDRESS_ID AND
  Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
+
+    if x:
+		return x
+	else:
+		return "N/A"
 
 def streetElectricity(addrs):
 
 	newAddrs = addrs.split(' ', 1)
 
-	return dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT, Address Where
+	x = dbutil.runSQLAsDict("""SELECT AVG(Consumption) from ELECTRICITYREPORT, Address Where
 		Address.ID = ElectricityReport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 #class ElectricityReport(object):
 #    def __init__(self, id, address_Id, month,

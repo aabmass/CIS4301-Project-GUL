@@ -5,16 +5,31 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def findOneByID(id):
-    return dbutil.runSQLAsDict("""SELECT * FROM ADDRESS WHERE
+    x = dbutil.runSQLAsDict("""SELECT * FROM ADDRESS WHERE
                                ADDRESS.ID = {}""".format(id))
 
+    if x:
+        return x
+    else:
+        return "N/A"
+
 def getId(addrs):
-    return dbutil.runSQLAsDict("""SELECT ADDRESS.ID FROM ADDRESS WHERE
+    x = dbutil.runSQLAsDict("""SELECT ADDRESS.ID FROM ADDRESS WHERE
 				ADDRESS.StreetAddress = {}""".format( '\''+ addrs+'\''))
 
+    if x:
+        return x
+    else:
+        return "N/A"
+
 def getInfo(addrs):
-    return dbutil.runSQLAsDict("""SELECT id, Streetaddress, coord_lat, coord_lon from ADDRESS
+    x = dbutil.runSQLAsDict("""SELECT id, Streetaddress, coord_lat, coord_lon from ADDRESS
 Where streetaddress = {}""".format( '\''+ addrs+'\''))
+
+    if x:
+        return x
+    else:
+        return "N/A"
 
 #class Address(object):
 #    def __init__(self, id, streetAddress, city,

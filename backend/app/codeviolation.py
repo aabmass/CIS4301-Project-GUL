@@ -5,16 +5,26 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def findCodeVio(addrs):
-    return dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, address
+    x = dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, address
 								where address.id = CodeViolationsreport.ADDRESS_ID and 
 								address.STREETADDRESS = {}""".format( '\'' + addrs + '\''))
 
+    if x:
+		return x
+	else:
+		return "N/A"
+
 def streetCodeVio(addrs):
 	newAddrs = addrs.split(' ', 1)
-	
-	return dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, Address Where
+
+	x = dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, Address Where
 		Address.ID = CodeViolationsreport.ADDRESS_ID and 
 		Address.StreetAddress LIKE {}""".format('\'' + '% ' + newAddrs[1] + '\''))
+
+	if x:
+		return x
+	else:
+		return "N/A"
 
 class CodeViolationsReport(object):
     def __init__(self, id, address_Id, violation,
