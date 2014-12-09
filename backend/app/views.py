@@ -21,30 +21,35 @@ def main():
 
 @app.route('/house/<addrs>')
 def houseWAddress(addrs):
-	data = {
-		"addrs":		addrs,
-		"info": 		address.getInfo(addrs),
+    info = address.getInfo(addrs)
+    if info == "N/A":
+        print "Address is none!"
+        return render_template('housenotfound.html')
 
-		"electricity": 		electricity.findElectricity(addrs),
-		"totalCityElec":	electricity.cityTotalElect(),
-		"avgCityElec":		electricity.cityAvgElect(),	
-		"avgStreetElec":	electricity.streetElectricity(addrs),
+    data = {
+            "addrs":		addrs,
+            "info": 		info,
 
-		"naturalGas":		naturalgas.findNatGas(addrs),
-		"totalCityNatGas":	naturalgas.cityTotalNatGas(),
-		"avgStreetNatGas":	naturalgas.streetNatGas(addrs),
-		"avgCityNatGas":	naturalgas.cityAvgNatGas(),
+            "electricity": 		electricity.findElectricity(addrs),
+            "totalCityElec":	electricity.cityTotalElect(),
+            "avgCityElec":		electricity.cityAvgElect(),	
+            "avgStreetElec":	electricity.streetElectricity(addrs),
 
-		"water":		water.findWater(addrs),
-		"totalCityWater":	water.cityTotalWater(),
-		"avgCityWater":		water.cityAvgWater(),
-		"avgStreetWater":	water.streetWater(addrs),
+            "naturalGas":		naturalgas.findNatGas(addrs),
+            "totalCityNatGas":	naturalgas.cityTotalNatGas(),
+            "avgStreetNatGas":	naturalgas.streetNatGas(addrs),
+            "avgCityNatGas":	naturalgas.cityAvgNatGas(),
 
-		"codeViolation":	codeviolation.findCodeVio(addrs),
-		"streetCodeViolation":	codeviolation.streetCodeVio(addrs)
-	}
+            "water":		water.findWater(addrs),
+            "totalCityWater":	water.cityTotalWater(),
+            "avgCityWater":		water.cityAvgWater(),
+            "avgStreetWater":	water.streetWater(addrs),
 
-	return render_template('house.html', data = data )
+            "codeViolation":	codeviolation.findCodeVio(addrs),
+            "streetCodeViolation":	codeviolation.streetCodeVio(addrs)
+    }
+
+    return render_template('house.html', data = data )
 
 
 @app.route('/data/<addrs>')
