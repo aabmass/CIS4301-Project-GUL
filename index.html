@@ -16,7 +16,12 @@
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
     <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
+    <script type="text/javascript">
+      function upperIn(){
+        document.getElementById("myinput").value = document.getElementById("myinput").value.toUpperCase();
+      }
+      console.log(document.getElementById("myinput"));
+    </script>
   </head>
   <body>
 
@@ -29,8 +34,8 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
         <form id="myform" action='house.html'>
-          <input type="text" id="myinput" placeholder="my address"/>
-          <input type="submit" value="search" id="mybutton">
+          <input type="text" id="myinput" placeholder="my address" onchange="upperIn()"/>
+          <input type="submit" value="search" id="mybutton" >
         </form>
       </div>
 
