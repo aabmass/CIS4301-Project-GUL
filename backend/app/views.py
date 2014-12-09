@@ -80,82 +80,82 @@ def houseData(addrs):
 def funfactsJson():
 	facts = [
 
-		{	"Fun": 			"Number of homes in need of a lawnmower "
-			"data":			funFacts.potentialLandscapingCustomers()
+		{	"Fun": 			"Number of homes in need of a lawnmower ",
+			"data":			funFacts.potentialLandscapingCustomers(),
 			"Fun2":			" houses recieved 'Overgrown Yard / Weeds' violations"
 		},
 
-		{	"Fun":			"Fowl Play"
-			"data":			funFacts.fowlPlay()
+		{	"Fun":			"Fowl Play",
+			"data":			funFacts.fowlPlay(),
 			"Fun2":			" houses recieved 'Fowl or Livestock' violations"
 		},
 
-		{	"Fun":			"nlogDead"
-			"data":			funFacts.treeSqueezers()
+		{	"Fun":			"nlogDead",
+			"data":			funFacts.treeSqueezers(),
 			"Fun2":			" houses recieved 'Dead or Hazardous Trees' violations"
 		},
 
 
 
-		{	"Fun":			"The address and quantity of the biggest water waster "
-			"data":			funFacts.maxCityWater()
+		{	"Fun":			"The address and quantity of the biggest water waster ",
+			"data":			funFacts.maxCityWater(),
 			"Fun2":			" "
 
 		},
 
-		{	"Fun":			"The address and quantity of the gassiest in town "
-			"data":			funFacts.maxCityNatGas()
+		{	"Fun":			"The address and quantity of the gassiest in town ",
+			"data":			funFacts.maxCityNatGas(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The address and quantity of the brightest "
-			"data":			funFacts.maxCityElect()
+		{	"Fun":			"The address and quantity of the brightest ",
+			"data":			funFacts.maxCityElect(),
 			"Fun2":			" "
 
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 1"
-			"data":			funFacts.avgNumOne()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 1",
+			"data":			funFacts.avgNumOne(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2"
-			"data":			funFacts.avgNumTwo()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2",
+			"data":			funFacts.avgNumTwo(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 3"
-			"data":			funFacts.avgNumThree()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 3",
+			"data":			funFacts.avgNumThree(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 4"
-			"data":			funFacts.avgNumFour()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 4",
+			"data":			funFacts.avgNumFour(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 5"
-			"data":			funFacts.avgNumFive()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 5",
+			"data":			funFacts.avgNumFive(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 6"
-			"data":			funFacts.avgNumSix()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 6",
+			"data":			funFacts.avgNumSix(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 7"
-			"data":			funFacts.avgNumSeven()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 7",
+			"data":			funFacts.avgNumSeven(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 8"
-			"data":			funFacts.avgNumEight()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 8",
+			"data":			funFacts.avgNumEight(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 9"
-			"data":			funFacts.avgNumNine()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 9",
+			"data":			funFacts.avgNumNine(),
 			"Fun2":			" "
 		}
 
@@ -169,81 +169,81 @@ def funfactsJson():
 def funfactsRend():
 	facts = [
 
-		{	"Fun": 			"Number of homes in need of a lawnmower "
-			"data":			funFacts.potentialLandscapingCustomers()
+		{	"Fun": 			"Number of homes in need of a lawnmower ",
+			"data":			funFacts.potentialLandscapingCustomers(),
 			"Fun2":			" houses recieved 'Overgrown Yard / Weeds' violations"
 		},
 
-		{	"Fun":			"Fowl Play"
-			"data":			funFacts.fowlPlay()
+		{	"Fun":			"Fowl Play",
+			"data":			funFacts.fowlPlay(),
 			"Fun2":			" houses recieved 'Fowl or Livestock' violations"
 		},
 
-		{	"Fun":			"nlogDead"
-			"data":			funFacts.treeSqueezers()
+		{	"Fun":			"nlogDead",
+			"data":			funFacts.treeSqueezers(),
 			"Fun2":			" houses recieved 'Dead or Hazardous Trees' violations"
 		},
 
 
-		{	"Fun":			"The address and quantity of the biggest water waster "
-			"data":			funFacts.maxCityWater()
+		{	"Fun":			"The address and quantity of the biggest water waster ",
+			"data":			funFacts.maxCityWater(),
 			"Fun2":			" "
 
 		},
 
-		{	"Fun":			"The address and quantity of the gassiest in town "
-			"data":			funFacts.maxCityNatGas()
+		{	"Fun":			"The address and quantity of the gassiest in town ",
+			"data":			funFacts.maxCityNatGas(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The address and quantity of the brightest "
-			"data":			funFacts.maxCityElect()
+		{	"Fun":			"The address and quantity of the brightest ",
+			"data":			funFacts.maxCityElect(),
 			"Fun2":			" "
 
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 1"
-			"data":			funFacts.avgNumOne()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 1",
+			"data":			funFacts.avgNumOne(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2"
-			"data":			funFacts.avgNumTwo()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2",
+			"data":			funFacts.avgNumTwo(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 3"
-			"data":			funFacts.avgNumThree()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 3",
+			"data":			funFacts.avgNumThree(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 4"
-			"data":			funFacts.avgNumFour()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 4",
+			"data":			funFacts.avgNumFour(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 5"
-			"data":			funFacts.avgNumFive()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 5",
+			"data":			funFacts.avgNumFive(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 6"
-			"data":			funFacts.avgNumSix()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 6",
+			"data":			funFacts.avgNumSix(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 7"
-			"data":			funFacts.avgNumSeven()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 7",
+			"data":			funFacts.avgNumSeven(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 8"
-			"data":			funFacts.avgNumEight()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 8",
+			"data":			funFacts.avgNumEight(),
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 9"
-			"data":			funFacts.avgNumNine()
+		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 9",
+			"data":			funFacts.avgNumNine(),
 			"Fun2":			" "
 		}
 
