@@ -46,8 +46,7 @@
       } 
 
       function dosomething() {
-        var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
-        location.href = "/house/" + newstring;
+        location.href = "/house/" + document.getElementById('myinput').value.replace(/ /g, "%20").toUpperCase();
         return false;
       }      
     </script>
