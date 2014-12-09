@@ -30,7 +30,7 @@
 
 	  var mapOptions = {
             center: { lat: {{ data.info[0].COORD_LAT }}, lng: {{data.info[0].COORD_LON }} },
-            zoom: 12
+            zoom: 14
           };
           var map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
@@ -86,7 +86,7 @@
               <strong>1</strong> months in this house's history. This address
               uses approximately {{ data.electricity[0]['CONSUMPTION']}} KW/hour of energy, 
 		{{ data.water[0].CONSUMPTION }} gallons of water, and
-		{{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each moth.
+		{{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each month.
             </p>
 
             <div id="map-canvas"></div>
@@ -141,8 +141,12 @@
           </div>
         </div>
         {% endif %}
+      </div>
+    </div>
 
         {% if data.codeViolation[0].VIOLATION %}
+      <div id='' class='clearfix house'>
+      <div class='results_content'>
           <div class='column_left'>
               <img alt='suitcase' src='/static/img/crime-512.png' class='icon'>
           </div>
@@ -156,10 +160,11 @@
                   <p>The case type is: {{ data.codeViolation[0].CASETYPE }}<p>
               </p>
           </div>
+      </div>
+      </div>
           {% endif %}
         </div>
 
-      </div>
     </div>
 
     <footer class="">developed by: Aaron Abbott, Clarence Hwang, Joseph McConnell, and Danny Sepler</a></footer>
