@@ -7,17 +7,14 @@ from loaddb import dbutil
 
 def totalTuples():
 
-	totAddress = dbutil.runSQLAsDict("""SELECT Count(ID) from address""")
-	print('\n\n' + totAddress + '\n\n\n\n')
-	totElect = dbutil.runSQLAsDict("""SELECT Count(ID) from Electricityreport""")
-	print(totElect)
-	totNatGas = dbutil.runSQLAsDict("""SELECT Count(ID) from NaturalGasReport""")
-	print(totNatGas)
-	totCodeVio = dbutil.runSQLAsDict("""SELECT Count(ID) from CodeViolationsReport""")
-	totWater = dbutil.runSQLAsDict("""SELECT Count(ID) from WaterReport""")
+	totAddress = dbutil.runSQLAsDict("""SELECT Count(ID) as cAd from address""")
+	totElect = dbutil.runSQLAsDict("""SELECT Count(ID) as cEl from Electricityreport""")
+	totNatGas = dbutil.runSQLAsDict("""SELECT Count(ID) as cNa from NaturalGasReport""")
+	totCodeVio = dbutil.runSQLAsDict("""SELECT Count(ID) as cCoVi from CodeViolationsReport""")
+	totWater = dbutil.runSQLAsDict("""SELECT Count(ID) as cWa from WaterReport""")
 
-	total = totAddress + totElect + totNatGas + totWater
+	# total = totAddress[0].cAD + totElect[0].cEL + totNatGas[0].cNA + totWater[0].cWA
 
 
 
-	return 
+	return totAddress[0].totalTuples
