@@ -24,7 +24,12 @@
 		location.href = "/house/" + newstring;
 	}
     </script>
-
+    <script type="text/javascript">
+      function upperIn(){
+        document.getElementById("myinput").value = document.getElementById("myinput").value.toUpperCase();
+      }
+      console.log(document.getElementById("myinput"));
+    </script>    
 
   </head>
   <body>
@@ -37,7 +42,7 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
         <form id="myform" onsubmit="dosomething()">
-          <input type="text" name='address' id="myinput" placeholder="my address"/>
+          <input type="text" name='address' id="myinput" placeholder="my address" onchange="upperIn()"/>
           <input type="button" value="search" id="mybutton">
         </form>
       </div>
