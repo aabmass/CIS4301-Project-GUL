@@ -8,13 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/house.css') }}">
 
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
-
-        <link rel="stylesheet" href="http://use.typekit.net/c/e9b594/1w;chaparral-pro,2,XXw:P:i4,XXn:P:i7,XY8:P:n4,XXk:P:n7;museo-sans,2,Py9:P:i1,Py8:P:n1,PyF:P:n7/d?3bb2a6e53c9684ffdc9a9bf71f5b2a623df248a4a1ae63c32599068f236732e457626403c37dd58f575abe240e77fac9f6a80700cc03279b780ec8dfe933e4b3d3691e96c9c1bfa49083cc6d9c0b5c36780bd1d928bf01fe76adfe29adef7edfacabdc76bfe77bb6dac407c757a45e0c85c050">
     
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/chart.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
+    <script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 
@@ -28,32 +26,34 @@
         function initialize() {
           var myLatlng = new google.maps.LatLng( {{ data.info[0].COORD_LAT }}, {{data.info[0].COORD_LON }} );
 
-	  var mapOptions = {
+	       var mapOptions = {
             center: { lat: {{ data.info[0].COORD_LAT }}, lng: {{data.info[0].COORD_LON }} },
             zoom: 14
           };
           var map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
 	  
-	  
-	  var marker = new google.maps.Marker({
-		position: myLatlng,
-		map: map
-	  });
+      	  
+      	  var marker = new google.maps.Marker({
+      		position: myLatlng,
+      		map: map
+      	  });
         }
         google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 
-      <script>
+      function upperIn(){
+        document.getElementById("myinput").value = document.getElementById("myinput").value.toUpperCase();
+       }
+
       function scroll() {
         window.scrollTo(1000,0);
       }
-    </script>
-    <script>
-  function dosomething() {
-    var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
-    location.href = "/house/" + newstring;
-    }
+
+    function dosomething() {
+      var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
+      location.href = "/house/" + newstring;
+      return false;
+    }      
     </script>
 
   </head>
@@ -68,9 +68,9 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	<form id="myform">
+	      <form id="myform" onsubmit="return dosomething()">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
-          <input type="submit" onclick="dosomething()" value="search" id="mybutton">
+          <input type="submit" onclick="" value="search" id="mybutton">
         </form>
       </div>
 
@@ -87,21 +87,14 @@
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>your search</p>
             <p class='category ng_binding'>{{ data.address  }}</p>
-            <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
             <p class='content-collapsed ng-binding'>
               We have information for
               <strong>1</strong> months in this house's history. This address
-              uses approximately {{ data.electricity[0]['CONSUMPTION']}} KW/hour of energy, 
-		{{ data.water[0].CONSUMPTION }} gallons of water, and
-		{{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each month.
+              uses approximately {{ data.electricity[0]['CONSUMPTION']}} KW/hour of energy, {{ data.water[0].CONSUMPTION }} gallons of water, and
+		          {{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each month.
             </p>
 
             <div id="map-canvas"></div>
-            <p hidden>
-              That is 87% of the neighborhood's average usage. 39% of their
-              power usage originates from water usage, whereas 61% of their
-              usage originates from fuel.
-            </p>
           </div>
       </div>
 
@@ -152,7 +145,7 @@
     </div>
 
         {% if data.codeViolation[0].VIOLATION %}
-      <div id='' class='clearfix house'>
+      <div id='' class='clearfix house code'>
       <div class='results_content'>
           <div class='column_left'>
               <img alt='suitcase' src='/static/img/crime-512.png' class='icon'>
@@ -160,9 +153,7 @@
           <div class='column_main'>
               <p class='category c-subhead remove_margin'>Code Violations</p>
               <p class='category ng_binding'>{{ data.codeViolation[0].VIOLATION }}</p>
-              <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
               <p class='content-collapsed ng-binding'>
-                  <!-- Uh ohhh... You have a code violation: <i>{{ data.codeViolation[0].VIOLATION }}</i> -->
                   <p>Inspected by: Inspector {{ data.codeViolation[0].INSPECTOR }}<p>
                   <p>The case type is: {{ data.codeViolation[0].CASETYPE }}<p>
               </p>
@@ -180,15 +171,18 @@
       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
       
       var waterChart = {
-	labels: ["This House", "The Street", "The City"],
-	datasets : [{
+      	labels: ["This House", "The Street", "The City"],
+      	datasets : [{
           fillColor : "rgba(220,220,220,0.5)",
           strokeColor : "rgba(220,220,220,0.8)",
           highlightFill: "rgba(220,220,220,0.75)",
           highlightStroke: "rgba(220,220,220,1)",
-          data : [ {{ data.water[0].CONSUMPTION }}, 
-		{{ data.avgStreetWater[0].AVGST }},
-		{{ data.avgCityWater[0].AVG }} ]
+          data : [ 
+            {{ data.water[0].CONSUMPTION }}, 
+        		{{ data.avgStreetWater[0].AVGST }},
+        		{{ data.avgCityWater[0].AVG }} 
+          ]
+
         }]
       }
 
@@ -218,16 +212,6 @@
         }]
       }
 
-      var barChartData = {
-        labels : ["January","February","March","April","May","June","July"],
-        datasets : [{
-          fillColor : "rgba(220,220,220,0.5)",
-          strokeColor : "rgba(220,220,220,0.8)",
-          highlightFill: "rgba(220,220,220,0.75)",
-          highlightStroke: "rgba(220,220,220,1)",
-          data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-        }]
-      }
       window.onload = function(){
         var ctx_water = document.getElementById("water_canvas").getContext("2d");
         window.myBar = new Chart(ctx_water).Bar(waterChart, {

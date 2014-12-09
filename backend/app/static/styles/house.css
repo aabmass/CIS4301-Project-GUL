@@ -1,6 +1,7 @@
 .green {background-color:#179831;}
 .tan {background-color:#fcfbe4;}
 .red_fade {background-color:#FFECEC;}
+.code { background-color: #EAEAEA; }
 #map-canvas {
   margin-top:50px;
   height:400px;

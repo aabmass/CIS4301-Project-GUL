@@ -6,43 +6,53 @@
     <title>GUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/tattle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/house.css') }}">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
-
-        <link rel="stylesheet" href="http://use.typekit.net/c/e9b594/1w;chaparral-pro,2,XXw:P:i4,XXn:P:i7,XY8:P:n4,XXk:P:n7;museo-sans,2,Py9:P:i1,Py8:P:n1,PyF:P:n7/d?3bb2a6e53c9684ffdc9a9bf71f5b2a623df248a4a1ae63c32599068f236732e457626403c37dd58f575abe240e77fac9f6a80700cc03279b780ec8dfe933e4b3d3691e96c9c1bfa49083cc6d9c0b5c36780bd1d928bf01fe76adfe29adef7edfacabdc76bfe77bb6dac407c757a45e0c85c050">
     
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-    <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
+    <script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-
       <script>
       function scroll() {
         window.scrollTo(1000,0);
       }
 
+     
       function fact() {
-        var num = {{ facts.length }};
-        alert( "size is "+size);
+      	var obj;
+      	$.get("/FunFactsData/",
+      		function(data) {
+      		obj = data;
 
-        num = Math.floor( Math.random() * num);
+      		// get random number
+      		var number = Math.floor( Math.random() * 14 );
+      		var fact = obj.facts[number];
+      		
+      		var string = "";
+      		for (var key in fact.data) {
+      			for (key2 in fact.data[key])
+      				string += fact.data[key][key2]+" and ";
+      			string = string.substring(0, string.length - 5 );
+      		}
 
-        var obj = facts[num];
-        var text = obj.Fun + " ";
-        for (var key in obj.data) {
-          text += obj[key] + " ";
-        }
-        text += obj.Fun2;
-        $('thefact').html( text );
-      }
+        	$('#thefact').html( fact.Fun + ":<br> <strong>" + string + "</strong> " + fact.Fun2 );
+        		
+        });
+      } 
 
-      fact();
+      function dosomething() {
+        var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
+        location.href = "/house/" + newstring;
+        return false;
+      }      
     </script>
   </head>
-  <body onload="scroll()">
+  <body onload="">
 
     <div id="landing" style="height:80%;">
 
@@ -53,7 +63,7 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	       <form id="myform" onsubmit="dosomething()">
+	       <form id="myform" onsubmit="return dosomething()">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
           <input type="submit" value="search" id="mybutton">
         </form>
@@ -66,17 +76,17 @@
         <div class='results_content'>
 
           <div class='column_left'>
-            <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/pittogrammi/142/65-512.png' class='icon'>
+            <img alt='suitcase' src='{{ url_for('static', filename='img/question.png') }}' class='icon'>
           </div>
 
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>Fun Facts!</p>
             <p class='category ng_binding'>Your fact is....</p>
             
-            <p id='thefact'>
+            <p id='thefact' style="font-size:20px;">
             </p>
 
-            <button class='btn' id='my_other_button' onclick='fact()'>Generate another fact</button>
+            <button class='btn btn-primary' id='my_other_button' onclick='fact()'>Generate another fact</button>
           </div>
         </div>
 

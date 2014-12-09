@@ -9,27 +9,20 @@
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 
-    <link rel="stylesheet" href="http://use.typekit.net/c/e9b594/1w;chaparral-pro,2,XXw:P:i4,XXn:P:i7,XY8:P:n4,XXk:P:n7;museo-sans,2,Py9:P:i1,Py8:P:n1,PyF:P:n7/d?3bb2a6e53c9684ffdc9a9bf71f5b2a623df248a4a1ae63c32599068f236732e457626403c37dd58f575abe240e77fac9f6a80700cc03279b780ec8dfe933e4b3d3691e96c9c1bfa49083cc6d9c0b5c36780bd1d928bf01fe76adfe29adef7edfacabdc76bfe77bb6dac407c757a45e0c85c050">
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-    <!--<script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
 
-    <meta content="authenticity_token" name="csrf-param" />
-    <meta content="cp2dU28VPmVb+w0Q8xcgcGXLqlK6dlslKgKFoWOWCTE=" name="csrf-token" />
-    <script type="text/javascript" src="//use.typekit.net/smx6kfu.js"></script>
+    <script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script> 
     <script>
-	function dosomething() {
-		var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");	
-		location.href = "/house/" + newstring;
-	}
-    </script>
-    <script type="text/javascript">
-      function upperIn(){
+  	function dosomething() {
+  		var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");	
+  		location.href = "/house/" + newstring;
+      return false;
+  	}
+    function upperIn(){
         document.getElementById("myinput").value = document.getElementById("myinput").value.toUpperCase();
-      }
-      console.log(document.getElementById("myinput"));
-    </script>    
+      }    
+    </script>  
 
   </head>
   <body>
@@ -41,15 +34,17 @@
           <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
-        <form id="myform">
+        <form id="myform" onsubmit="return dosomething()">
           <input type="text" name='address' id="myinput" placeholder="my address" onchange="upperIn()"/>
-          <input type="button" onclick="dosomething()" value="search" id="mybutton">
+          <input type="button" value="search" id="mybutton">
 
         </form>
       </div>
     </div>
 
-    <footer class="">developed by: Aaron Abbott, Clarence Hwang, Joseph McConnell, and Danny Sepler</footer>
+    <footer class="">
+      developed by: <a href='https://github.com/aabmass'>Aaron Abbott</a>, Clarence Hwang, <a href='https://github.com/JJMcConnell'>Joseph McConnell</a>, and <a href='https://github.com/dannysepler'>Danny Sepler</a>
+    </footer>
 
   </body>
 </html>
