@@ -21,6 +21,10 @@ def main():
 
 @app.route('/house/<addrs>')
 def houseWAddress(addrs):
+	info = address.getInfo(addrs)
+	if info == "N/A":
+			return render_template('not_found.html', addrs = info)
+			
 	data = {
 		"addrs":		addrs,
 		"info": 		address.getInfo(addrs),
