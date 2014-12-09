@@ -39,6 +39,7 @@
 			for (key2 in fact.data[key]) {
 				string += fact.data[key][key2]+" and ";
 			}
+			string = string.substring(0, string.length - 5 );
 		}
 		$('#thefact').text( fact.Fun + " " + string + " " + fact.Fun2 );
 		
