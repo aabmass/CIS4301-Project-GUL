@@ -49,6 +49,13 @@
         window.scrollTo(1000,0);
       }
     </script>
+    <script>
+  function dosomething() {
+    var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
+    location.href = "/house/" + newstring;
+    }
+    </script>
+
   </head>
   <body onload="scroll()">
 
