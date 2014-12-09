@@ -49,6 +49,13 @@
         window.scrollTo(1000,0);
       }
     </script>
+    <script>
+  function dosomething() {
+    var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
+    location.href = "/house/" + newstring;
+    }
+    </script>
+
   </head>
   <body onload="scroll()">
 
@@ -61,9 +68,9 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	<form id="myform" onsubmit="dosomething()">
+	<form id="myform">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
-          <input type="submit" value="search" id="mybutton">
+          <input type="submit" onclick="dosomething()" value="search" id="mybutton">
         </form>
       </div>
 

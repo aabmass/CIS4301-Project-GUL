@@ -48,15 +48,6 @@ where ELECTRICITYREPORT.ADDRESS_ID = address.id AND
       NaturalGasReport.address_id = address.id and 
       address.streetaddress LIKE '1 %'""")
 
-def avgNumTwo():
-	return dbutil.runSQLAsDict("""SELECT avg(electricityreport.consumption) as ElectAvg, 
-       avg(waterreport.consumption) as WaterAvg, 
-       avg(naturalgasreport.consumption) as NatGasAvg 
-       from ELECTRICITYREPORT, waterreport, address, naturalgasreport
-where ELECTRICITYREPORT.ADDRESS_ID = address.id AND 
-      Waterreport.address_id = address.id and
-      NaturalGasReport.address_id = address.id and 
-      address.streetaddress LIKE '2 %'""")
 
 def avgNumThree():
 	return dbutil.runSQLAsDict("""SELECT avg(electricityreport.consumption) as ElectAvg, 

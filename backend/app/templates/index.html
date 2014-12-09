@@ -24,7 +24,12 @@
 		location.href = "/house/" + newstring;
 	}
     </script>
-
+    <script type="text/javascript">
+      function upperIn(){
+        document.getElementById("myinput").value = document.getElementById("myinput").value.toUpperCase();
+      }
+      console.log(document.getElementById("myinput"));
+    </script>    
 
   </head>
   <body>
@@ -37,13 +42,14 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
         <form id="myform">
-          <input type="text" name='address' id="myinput" placeholder="my address"/>
+          <input type="text" name='address' id="myinput" placeholder="my address" onchange="upperIn()"/>
           <input type="button" onclick="dosomething()" value="search" id="mybutton">
+
         </form>
       </div>
     </div>
 
-    <footer class="">developed by: People</footer>
+    <footer class="">developed by: Aaron Abbott, Clarence Hwang, Joseph McConnell, and Danny Sepler</footer>
 
   </body>
 </html>
