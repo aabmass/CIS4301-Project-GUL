@@ -76,7 +76,7 @@ def houseData(addrs):
 
 
 
-@app.route('/FunFacts/')
+@app.route('/FunFactsData/')
 def funfactsJson():
 	facts = [
 
