@@ -6,6 +6,7 @@
     <title>GUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/tattle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/house.css') }}">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
 
@@ -41,7 +42,7 @@
 			}
 			string = string.substring(0, string.length - 5 );
 		}
-		$('#thefact').text( fact.Fun + " " + string + " " + fact.Fun2 );
+		$('#thefact').html( fact.Fun + ":<br> <strong>" + string + "</strong> " + fact.Fun2 );
 		
 	});
       }
@@ -71,17 +72,17 @@
         <div class='results_content'>
 
           <div class='column_left'>
-            <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/pittogrammi/142/65-512.png' class='icon'>
+            <img alt='suitcase' src='{{ url_for('static', filename='img/question.png') }}' class='icon'>
           </div>
 
           <div class='column_main'>
             <p class='category c-subhead remove_margin'>Fun Facts!</p>
             <p class='category ng_binding'>Your fact is....</p>
             
-            <p id='thefact'>
+            <p id='thefact' style="font-size:20px;">
             </p>
 
-            <button class='btn' id='my_other_button' onclick='fact()'>Generate another fact</button>
+            <button class='btn btn-primary' id='my_other_button' onclick='fact()'>Generate another fact</button>
           </div>
         </div>
 
