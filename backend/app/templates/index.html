@@ -36,9 +36,10 @@
           <img id="logo" alt="Tattle: who owns what" class="animated" src="{{ url_for('static', filename='img/icon-plug.png') }}">
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
-        <form id="myform" onsubmit="dosomething()">
+
+        <form id="myform" >
           <input type="text" name='address' id="myinput" placeholder="my address"/>
-          <input type="button" value="search" id="mybutton">
+          <input type="button" onclick="dosomething()" value="search" id="mybutton">
         </form>
       </div>
     </div>
