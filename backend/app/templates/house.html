@@ -82,10 +82,10 @@
             <p class='category ng_binding'>{{ data.address  }}</p>
             <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
             <p class='content-collapsed ng-binding'>
-              1234. We have information for
+              We have information for
               <strong>1</strong> months in this house's history. This address
-              uses approximately {{ data.electricity[0].CONCUMPTION }} KW/hour of energy, 
-		{{ data.naturalGas[0].CONSUMPTION }} gallons of water, and
+              uses approximately {{ data.electricity[0]['CONSUMPTION']}} KW/hour of energy, 
+		{{ data.water[0].CONSUMPTION }} gallons of water, and
 		{{ data.naturalGas[0].CONSUMPTION }} gallons of natural gas each moth.
             </p>
 
@@ -102,6 +102,7 @@
 
     <div id='' class='clearfix house red_fade'>
       <div class='results_content'>
+        {% if data.water[0].CONSUMPTION %}
         <div class='column_left'>
           <img alt='suitcase' src='https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/512/water-.png' class='icon'>
         </div>
@@ -113,7 +114,9 @@
             <canvas id="water_canvas" height="450" width="600"></canvas>
           </div>
         </div>
+        {% endif %}
 
+        {% if data.electricity[0].CONSUMPTION %}
         <div class='column_left'>
           <img alt='suitcase' src='http://png-1.findicons.com/files/icons/2480/simplegreen_sustainable_business_icons_set/128/plug_electricity.png' class='icon'>
         </div>
@@ -124,7 +127,9 @@
             <canvas id="elec_canvas" height="450" width="600"></canvas>
           </div>
         </div>
+        {% endif %}
 
+        {% if data.naturalGas[0].CONSUMPTION %}
         <div class='column_left'>
           <img alt='suitcase' src='http://png-3.findicons.com/files/icons/2770/ios_7_icons/512/gas2.png' class='icon'>
         </div>
@@ -132,14 +137,32 @@
           <p class='category c-subhead remove_margin'>your usage -- broken down</p>
           <p class='category ng_binding'>Natural Gas</p>
           <div style="width: 100%">
-            <canvas id="natgas_canvas" height="450" width="600"></canvas>
+              <canvas id="natgas_canvas" height="450" width="600"></canvas>
           </div>
+        </div>
+        {% endif %}
+
+        {% if data.codeViolation[0].VIOLATION %}
+          <div class='column_left'>
+              <img alt='suitcase' src='/static/img/crime-512.png' class='icon'>
+          </div>
+          <div class='column_main'>
+              <p class='category c-subhead remove_margin'>Code Violations</p>
+              <p class='category ng_binding'>{{ data.codeViolation[0].VIOLATION }}</p>
+              <!--<img class='content-toggle arrow-down' src='http://whoownswhat.herokuapp.com/assets/tattle_arrow.png'>-->
+              <p class='content-collapsed ng-binding'>
+                  Uh ohhh... You have a code violation: <i>{{ data.codeViolation[0].VIOLATION }}</i>
+                  <p>Inspected by: Inspector {{ data.codeViolation[0].INSPECTOR }}<p>
+                  <p>The case type is: {{ data.codeViolation[0].CASETYPE }}<p>
+              </p>
+          </div>
+          {% endif %}
         </div>
 
       </div>
     </div>
 
-    <footer class="">developed by: Aaron Abbot, Clarence Hwang, Joseph McConnell, and Danny Sepler</a></footer>
+    <footer class="">developed by: Aaron Abbott, Clarence Hwang, Joseph McConnell, and Danny Sepler</a></footer>
 
     <script>
       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
