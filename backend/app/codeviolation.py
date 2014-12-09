@@ -5,11 +5,11 @@ sys.path.append("../")
 from loaddb import dbutil
 
 def findCodeVio(addrs):
-    x = dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, address
+	x = dbutil.runSQLAsDict("""SELECT Violation, CaseType, Inspector from CodeViolationsreport, address
 								where address.id = CodeViolationsreport.ADDRESS_ID and 
 								address.STREETADDRESS = {}""".format( '\'' + addrs + '\''))
 
-    if x:
+	if x:
 		return x
 	else:
 		return "N/A"

@@ -22,11 +22,11 @@ def cityAvgElect():
 		return "N/A"
 
 def findElectricity(addrs):
-    x = dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
- Address.ID = ELECTRICITYREPORT.ADDRESS_ID AND
- Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
+	x = dbutil.runSQLAsDict("""SELECT Consumption from ELECTRICITYREPORT, Address Where
+	Address.ID = ELECTRICITYREPORT.ADDRESS_ID AND
+	Address.StreetAddress = {}""".format( '\'' + addrs + '\''))
 
-    if x:
+	if x:
 		return x
 	else:
 		return "N/A"

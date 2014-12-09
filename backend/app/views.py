@@ -32,6 +32,7 @@ def houseWAddress(addrs):
 		"naturalGas":		naturalgas.findNatGas(addrs),
 		"totalCityNatGas":	naturalgas.cityTotalNatGas(),
 		"avgStreetNatGas":	naturalgas.streetNatGas(addrs),
+		"avgCityNatGas":	naturalgas.cityAvgNatGas(),
 
 		"water":		water.findWater(addrs),
 		"totalCityWater":	water.cityTotalWater(),

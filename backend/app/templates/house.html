@@ -151,9 +151,9 @@
           strokeColor : "rgba(220,220,220,0.8)",
           highlightFill: "rgba(220,220,220,0.75)",
           highlightStroke: "rgba(220,220,220,1)",
-          data : [ {{ data.water[0].CONSUMPTION }}, 
-		{{ data.avgStreetWater[0].AVG(CONSUMPTION) }},
-		{{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+          data : [ {{ data.water }}, 
+		{{ data.avgStreetWater[0].AVGST }},
+		{{ data.avgCityWater[0].AVG }} ]
         }]
       }
 
@@ -164,9 +164,9 @@
           strokeColor : "rgba(220,220,220,0.8)",
           highlightFill: "rgba(220,220,220,0.75)",
           highlightStroke: "rgba(220,220,220,1)",
-          data : [ {{ data.water[0].CONSUMPTION }}, 
-                {{ data.avgStreetWater[0].AVG(CONSUMPTION) }},      
-                {{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+          data : [ {{ data.naturalGas }}, 
+                {{ data.avgStreetNatGas[0].AVGST }},      
+                {{ data.avgCityNatGas[0].AVG }} ]
         }]
       }
 
@@ -178,8 +178,8 @@
           highlightFill: "rgba(220,220,220,0.75)",
           highlightStroke: "rgba(220,220,220,1)",
           data : [ {{ data.water[0].CONSUMPTION }}, 
-                {{ data.avgStreetWater[0].AVG(CONSUMPTION) }},      
-                {{ data.avgCityWater[0].AVG(CONSUMPTION) }} ]
+                {{ data.avgStreetElec[0].AVGST }},      
+                {{ data.avgCityElec[0].AVG }} ]
         }]
       }
 
