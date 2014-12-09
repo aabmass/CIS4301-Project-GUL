@@ -119,11 +119,6 @@ def funfactsJson():
 			"Fun2":			" "
 		},
 
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2",
-			"data":			funFacts.avgNumTwo(),
-			"Fun2":			" "
-		},
-
 		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 3",
 			"data":			funFacts.avgNumThree(),
 			"Fun2":			" "
@@ -204,11 +199,6 @@ def funfactsRend():
 
 		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 1",
 			"data":			funFacts.avgNumOne(),
-			"Fun2":			" "
-		},
-
-		{	"Fun":			"The average Electricity, Water, and Natural Gas of all address that begin with the number 2",
-			"data":			funFacts.avgNumTwo(),
 			"Fun2":			" "
 		},
 
