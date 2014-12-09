@@ -51,7 +51,6 @@ def houseWAddress(addrs):
 
     return render_template('house.html', data = data )
 
-
 @app.route('/data/<addrs>')
 def houseData(addrs):
 	data = {
@@ -246,22 +245,6 @@ def funfactsRend():
 
 	return render_template('FunFacts.html', facts = facts )
 
-
-
-@app.route('/codeViolation/<addrs>')
-def getCodeVio(addrs):
-	return json.jsonify({"codeViolation": codeviolation.findCodeVio(addrs)})
-
-@app.route('/codeViolationStreet/<addrs>')
-def getCodeVioStreet(addrs):
-	return json.jsonify({"codeViolation": codeviolation.streetCodeVio(addrs)})
-
 @app.route('/TUPLES')
 def totalTuples():
 	return json.jsonify({"totalTuples": totaltuples.totalTuples()})
-
-@app.route('/Water/<addrs>')
-
-def FindWater(addrs):
-	return json.jsonify({"water": water.findWater(addrs)})
-

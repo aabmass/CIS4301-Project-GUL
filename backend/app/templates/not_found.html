@@ -1,4 +1,4 @@
- 
+
 <!DOCTYPE html>
 <html ng-app="CC">
   <head>
@@ -6,52 +6,36 @@
     <title>GUL</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/tattle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/house.css') }}">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
     
     <script type="text/javascript" src="{{ url_for('static', filename='scripts/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/chart.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
     <script type="text/javascript" src="http://use.typekit.net/smx6kfu.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 
     <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_1/suggest.min.js"></script>
-      <script>
+
+
+    <!-- GOOGLE MAPS -->
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_7TfRRWFPYaAM0z5R4G2jhD5O10J90AE"></script>
+      <script type="text/javascript">
       function scroll() {
         window.scrollTo(1000,0);
       }
 
-     
-      function fact() {
-      	var obj;
-      	$.get("/FunFactsData/",
-      		function(data) {
-      		obj = data;
-
-      		// get random number
-      		var number = Math.floor( Math.random() * 14 );
-      		var fact = obj.facts[number];
-      		
-      		var string = "";
-      		for (var key in fact.data) {
-      			for (key2 in fact.data[key])
-      				string += fact.data[key][key2]+" and ";
-      			string = string.substring(0, string.length - 5 );
-      		}
-
-        	$('#thefact').html( fact.Fun + ":<br> <strong>" + string + "</strong> " + fact.Fun2 );
-        		
-        });
-      } 
-
-      function dosomething() {
-        location.href = "/house/" + document.getElementById('myinput').value.replace(/ /g, "%20").toUpperCase();
-        return false;
-      }      
+    function dosomething() {
+      var newstring = document.getElementById('myinput').value.replace(/ /g, "%20");  
+      location.href = "/house/" + newstring;
+      return false;
+    }      
     </script>
+
   </head>
-  <body onload="">
+  <body onload="scroll()">
 
     <div id="landing" style="height:80%;">
 
@@ -62,9 +46,9 @@
           <h2 id="tagline">how much do YOU use?</h2>
         </div>
 
-	       <form id="myform" onsubmit="return dosomething()">
+	      <form id="myform" onsubmit="return dosomething()">
           <input type="text" id="myinput" name='address' placeholder="my address"/>
-          <input type="submit" value="search" id="mybutton">
+          <input type="submit" onclick="" value="search" id="mybutton">
         </form>
       </div>
 
@@ -75,20 +59,16 @@
         <div class='results_content'>
 
           <div class='column_left'>
-            <img alt='suitcase' src='{{ url_for('static', filename='img/question.png') }}' class='icon'>
+            <img alt='suitcase' src='http://i.stack.imgur.com/bJ120.png' class='icon'>
           </div>
 
           <div class='column_main'>
-            <p class='category c-subhead remove_margin'>Fun Facts!</p>
-            <p class='category ng_binding'>Your fact is....</p>
-            
-            <p id='thefact' style="font-size:20px;">
+            <p class='category c-subhead remove_margin'>your search</p>
+            <p class='category ng_binding'>{{ data.addrs  }}</p>
+            <p class='content-collapsed ng-binding'>
+              Address not found.
             </p>
-
-            <button class='btn btn-primary' id='my_other_button' onclick='fact()'>Generate another fact</button>
           </div>
-        </div>
-
       </div>
     </div>
 
