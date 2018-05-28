@@ -11,10 +11,10 @@ def getCursor():
     if DBUtil.con is None:
         if ('--local' in sys.argv):
             # SSH port forwarding is done, use localhost
-            DBUtil.con = oracle.connect("aaron/itsmeaa1@localhost/orcl")
+            DBUtil.con = oracle.connect("aaron/ppppppp@localhost/orcl")
         else:
             # We are running on UF domain, connect to oracle.ci...
-            DBUtil.con = oracle.connect("aaron/itsmeaa1@oracle.cise.ufl.edu/orcl")
+            DBUtil.con = oracle.connect("aaron/ppppppp@oracle.cise.ufl.edu/orcl")
     return DBUtil.con.cursor()
 
 def close():
